@@ -1,6 +1,5 @@
 module.exports = {
 	plugins: {
-		'autoprefixer': {},
 		'postcss-cssnext': {},
 		'postcss-px-to-viewport': {
 			unitToConvert: 'px',

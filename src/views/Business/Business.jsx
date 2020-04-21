@@ -5,8 +5,12 @@ export default class Business extends Component {
 		super(props);
 		this.state = props.location.state;
 	}
-	componentDidMount() {}
+	componentDidMount() {
+
+	}
 	render() {
-		return <h1>买卖房源</h1>;
+		return (<div>
+
+		</div>)
 	}
 }

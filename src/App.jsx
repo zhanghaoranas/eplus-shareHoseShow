@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Router, navigate } from "@reach/router";
 import queryString from "query-string";
 
-import Business from "./views/Business.jsx";
+import Business from "./views/Business/Business.jsx";
 import Lease from "./views/Lease.jsx";
 import NewHouse from "./views/NewHouse.jsx";
 

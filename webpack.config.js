@@ -11,6 +11,7 @@ module.exports = {
 	entry: './src/index.jsx',
 	devtool: devMode ? 'inline-source-map' : '',
 	devServer: {
+		historyApiFallback: true,
 		contentBase: './dist',
 		hot: true
 	},
@@ -19,13 +20,13 @@ module.exports = {
 		rules: [{
 			test: /\.css$/,
 			use: [{
-					loader: MiniCssExtractPlugin.loader,
-					options: {
-						esModule: true,
-						hmr: devMode,
-						// publicPath: '',
-					}
-				},
+				loader: MiniCssExtractPlugin.loader,
+				options: {
+					esModule: true,
+					hmr: devMode,
+					// publicPath: '',
+				}
+			},
 				'css-loader',
 				'postcss-loader',
 			]

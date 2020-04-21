@@ -5,4 +5,5 @@ import "./componentStyle/swiper.css";
 
 export default function Swiper(props) {
 	const { imgUrl } = props;
+
 }
