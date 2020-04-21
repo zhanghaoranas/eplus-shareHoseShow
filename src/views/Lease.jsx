@@ -5,6 +5,6 @@ export default class Lease extends Component {
 		super();
 	}
 	render() {
-		return <h1>租赁房源</h1>;
+		return <div>租赁房源</div>;
 	}
 }
