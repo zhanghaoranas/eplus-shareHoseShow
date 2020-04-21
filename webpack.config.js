@@ -8,7 +8,7 @@ const webpack = require('webpack');
 const devMode = process.env.NODE_ENV === 'development';
 
 module.exports = {
-	entry: './src/index.js',
+	entry: './src/index.jsx',
 	devtool: devMode ? 'inline-source-map' : '',
 	devServer: {
 		contentBase: './dist',
@@ -17,7 +17,7 @@ module.exports = {
 	mode: devMode ? 'development' : 'production',
 	module: {
 		rules: [{
-			test: /\.styl$/,
+			test: /\.css$/,
 			use: [{
 					loader: MiniCssExtractPlugin.loader,
 					options: {
@@ -28,9 +28,13 @@ module.exports = {
 				},
 				'css-loader',
 				'postcss-loader',
-				'stylus-loader'
 			]
-		}]
+		}, {
+			test: /\.(jsx|js)$/,
+			exclude: /node_modules/,
+			loader: "babel-loader"
+		}],
+
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

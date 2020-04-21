@@ -1,0 +1,15 @@
+/**
+* css 变量 在 :root 中定义变量 在选择器中使用var() 使用变量
+*
+**/
+
+:root {
+	--primaryColor: #4184e7;
+	--fullWidth: 750px;
+}
+
+.swipper {
+	width: var(--fullWidth);
+	height: 420px;
+	overflow: hidden;
+}
