@@ -12,7 +12,8 @@ module.exports = {
 	devtool: devMode ? 'inline-source-map' : '',
 	devServer: {
 		historyApiFallback: true,
-		contentBase: './dist',
+		contentBase: path.join(__dirname, 'dist'),
+		port: 8080,
 		hot: true
 	},
 	mode: devMode ? 'development' : 'production',
@@ -20,13 +21,13 @@ module.exports = {
 		rules: [{
 			test: /\.css$/,
 			use: [{
-				loader: MiniCssExtractPlugin.loader,
-				options: {
-					esModule: true,
-					hmr: devMode,
-					// publicPath: '',
-				}
-			},
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+						esModule: true,
+						hmr: devMode,
+						// publicPath: '',
+					}
+				},
 				'css-loader',
 				'postcss-loader',
 			]
@@ -48,9 +49,11 @@ module.exports = {
 			filename: devMode ? 'css/[name].css' : 'css/[name].[hash].css',
 			chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash].css',
 		}),
+		new webpack.HotModuleReplacementPlugin(),
 	],
 	output: {
 		filename: 'js/bundle.[hash].js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'dist'),
+		publicPath: '/'
 	},
 };
