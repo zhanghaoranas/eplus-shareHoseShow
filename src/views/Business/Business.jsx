@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Loading from '../../components/Loading.jsx';
 import { baseUrl, baseImgUrl } from "../../config.js";
 export default class Business extends Component {
 	constructor(props) {
@@ -6,6 +7,7 @@ export default class Business extends Component {
 		this.state = {
 			...props.location.state,
 			fyInfo: null,
+			fyImg: [],
 			isLoading: true,
 		};
 	}
@@ -24,20 +26,36 @@ export default class Business extends Component {
 			}).then((res) => {
 				return res.json();
 			});
+
 			this.setState({
 				fyInfo: data,
-				isLoading: false,
 			});
+			this.getFyImg();
+
 		} catch (error) {
 			console.log(error);
 		}
+	}
+
+	async getFyImg() {
+		// 1.获取图片路径，2. new Image 加载图片 3. 将加载成功的路径添加到 房源图片中
+
+	}
+
+	loadImg(src) {
+		return new Promise((resolve, reject) => {
+			const image = new Image();
+			image.src = src;
+			image.onload = () => resolve({ src: src, status: 'success' });
+			image.onerror = () => resolve({ src: src, status: 'fail' })
+		})
 	}
 
 	render() {
 		const { fyInfo, isLoading } = this.state;
 
 		if (isLoading) {
-			return <div>数据请求中</div>;
+			return <Loading type="spinningBubbles" color="#FA8072"></Loading>;
 		} else {
 			return <div>{fyInfo.id}</div>;
 		}
