@@ -1,0 +1,6 @@
+.swiper_img {
+	height: 420px;
+	display: block;
+	width: 100%;
+	object-fit: cover;
+}

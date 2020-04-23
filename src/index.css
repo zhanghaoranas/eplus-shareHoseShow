@@ -6,10 +6,10 @@
 :root {
 	--primaryColor: #4184e7;
 	--fullWidth: 750px;
+	--borderColor: #EEEEEE;
+	--black-light: #999999;
 }
 
-.swipper {
-	width: var(--fullWidth);
-	height: 420px;
-	overflow: hidden;
+#root {
+	background-color: var(--primaryColor);
 }
