@@ -1,6 +1,6 @@
 module.exports = {
 	plugins: {
-		'postcss-cssnext': {},
+		'postcss-preset-env': {},
 		'postcss-px-to-viewport': {
 			unitToConvert: 'px',
 			viewportWidth: 750,

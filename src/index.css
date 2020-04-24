@@ -9,7 +9,3 @@
 	--borderColor: #EEEEEE;
 	--black-light: #999999;
 }
-
-#root {
-	background-color: var(--primaryColor);
-}
