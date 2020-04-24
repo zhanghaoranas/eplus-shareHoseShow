@@ -37,9 +37,12 @@ module.exports = {
 			loader: "babel-loader"
 		}, {
 			test: /\.(png|svg|jpg|gif)$/,
-			use: [
-				'file-loader'
-			]
+			use: [{
+				loader: 'file-loader',
+				options: {
+					outputPath: 'images'
+				}
+			}]
 		}],
 
 	},
@@ -56,6 +59,11 @@ module.exports = {
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
+	optimization: {
+		splitChunks: {
+			chunks: 'all'
+		}
+	},
 	output: {
 		filename: 'js/bundle.[hash].js',
 		path: path.resolve(__dirname, 'dist'),
