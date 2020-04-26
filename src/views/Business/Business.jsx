@@ -3,6 +3,7 @@ import Loading from "../../components/Loading.jsx";
 import FySwiper from "../../components/FySwiper.jsx";
 import Tag from "../../components/Tag.jsx";
 
+import Style from "./business.module.css";
 import { baseUrl, baseImgUrl } from "../../config.js";
 import noImg from "../../static/images/dai.jpg";
 
@@ -101,9 +102,31 @@ export default class Business extends Component {
 			return (
 				<div>
 					<FySwiper imgList={fyImg}></FySwiper>
-					<section>
-						<h2>{fyInfo.xqName}</h2>
+					<section className={Style.session}>
+						<h2 className={}>{fyInfo.xqName}</h2>
 						<div>{tagMap}</div>
+						<div>
+							<div>
+								<span>{fyInfo.price}</span>
+								<span>{fyInfo.price}</span>
+							</div>
+							<div>
+								<span>{fyInfo.price}</span>
+								<span>{fyInfo.price}</span>
+							</div>
+							<div>
+								<span>{fyInfo.price}</span>
+								<span>{fyInfo.price}</span>
+							</div>
+						</div>
+						<div>
+							<span>发布</span>
+							<p></p>
+						</div>
+						<div>
+							<span>地址</span>
+							<p></p>
+						</div>
 					</section>
 				</div>
 			);

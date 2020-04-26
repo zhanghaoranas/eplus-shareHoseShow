@@ -79,7 +79,9 @@ module.exports = {
 			filename: devMode ? 'css/[name].css' : 'css/[name].[hash:6].css',
 			chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash:6].css',
 		}),
-		new webpack.HotModuleReplacementPlugin(),
+		new webpack.HotModuleReplacementPlugin({
+			multiStep: true,
+		}),
 	],
 	optimization: {
 		splitChunks: {
