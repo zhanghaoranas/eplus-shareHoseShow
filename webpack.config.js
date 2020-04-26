@@ -20,12 +20,34 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.css$/,
-			use: [{
+			exclude: /node_modules/,
+			use: [
+				{
 					loader: MiniCssExtractPlugin.loader,
 					options: {
 						esModule: true,
 						hmr: devMode,
-						// publicPath: '',
+					}
+				},
+				{
+					loader: 'css-loader',
+					options: {
+						modules: {
+							localIdentName: '[name]__[local]--[hash:base64:5]'
+						},
+					}
+				},
+				'postcss-loader',
+			]
+		}, {
+			test: /\.css$/,
+			include: /node_modules/,
+			use: [
+				{
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+						esModule: true,
+						hmr: devMode,
 					}
 				},
 				'css-loader',
@@ -54,8 +76,8 @@ module.exports = {
 		new webpack.ProgressPlugin(),
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin({
-			filename: devMode ? 'css/[name].css' : 'css/[name].[hash].css',
-			chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash].css',
+			filename: devMode ? 'css/[name].css' : 'css/[name].[hash:6].css',
+			chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash:6].css',
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 	],
