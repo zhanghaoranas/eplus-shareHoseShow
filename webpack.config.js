@@ -21,8 +21,7 @@ module.exports = {
 		rules: [{
 			test: /\.css$/,
 			exclude: /node_modules/,
-			use: [
-				{
+			use: [{
 					loader: MiniCssExtractPlugin.loader,
 					options: {
 						esModule: true,
@@ -42,8 +41,7 @@ module.exports = {
 		}, {
 			test: /\.css$/,
 			include: /node_modules/,
-			use: [
-				{
+			use: [{
 					loader: MiniCssExtractPlugin.loader,
 					options: {
 						esModule: true,
@@ -79,9 +77,7 @@ module.exports = {
 			filename: devMode ? 'css/[name].css' : 'css/[name].[hash:6].css',
 			chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash:6].css',
 		}),
-		new webpack.HotModuleReplacementPlugin({
-			multiStep: true,
-		}),
+		new webpack.HotModuleReplacementPlugin(),
 	],
 	optimization: {
 		splitChunks: {

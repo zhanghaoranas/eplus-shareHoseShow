@@ -1,12 +1,11 @@
 .tag_box {
 	display: inline-block;
-	height: 36px;
-	line-height: 36px;
+	height: 32px;
+	line-height: 32px;
 	border: 1px solid var(--borderColor);
 	border-radius: 4px;
 	color: var(--blackLight);
 	font-size: 24px;
 	margin-right: 16px;
 	padding: 0 10px;
-	box-sizing: border-box;
 }

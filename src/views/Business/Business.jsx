@@ -88,6 +88,7 @@ export default class Business extends Component {
 		if (isLoading) {
 			return <Loading type="spinningBubbles" color="#FA8072"></Loading>;
 		} else {
+			// 标签
 			const tagList = [];
 			const { ifImg, ifKey, ifOnly, ifMan, ifSubway, xuequ } = fyInfo;
 			(ifImg && tagList.push("图片")) ||
@@ -99,35 +100,159 @@ export default class Business extends Component {
 			const tagMap = tagList.map((item, index) => (
 				<Tag key={index} text={item}></Tag>
 			));
+
+			// 特色
+
+			const features = [];
+			const { hexinmaidian, taxationJiexi, traffic, introduce } = fyInfo;
+			(hexinmaidian &&
+				features.push({ label: "核心卖点", value: hexinmaidian })) ||
+				(taxationJiexi &&
+					features.push({
+						label: "税费解析",
+						value: taxationJiexi,
+					})) ||
+				(traffic &&
+					features.push({ label: "交通出行", value: traffic })) ||
+				(introduce &&
+					features.push({ label: "房源介绍", value: introduce }));
+
 			return (
 				<div>
 					<FySwiper imgList={fyImg}></FySwiper>
-					<section className={Style.session}>
-						<h2 className={}>{fyInfo.xqName}</h2>
-						<div>{tagMap}</div>
-						<div>
+					<section className={`${Style.session} ${Style.bgcolor}`}>
+						<h2 className={Style.xqName}>{fyInfo.xqName}</h2>
+						<div className={Style.tag_warp}>{tagMap}</div>
+						<div className={Style.activeInfo}>
 							<div>
-								<span>{fyInfo.price}</span>
-								<span>{fyInfo.price}</span>
+								<span>{fyInfo.price}万元</span>
+								<span>{fyInfo.danjia}元/㎡</span>
 							</div>
 							<div>
-								<span>{fyInfo.price}</span>
-								<span>{fyInfo.price}</span>
+								<span>
+									{fyInfo.shi}室{fyInfo.ting}厅{fyInfo.wei}卫
+								</span>
+								<span>
+									{fyInfo.louceng}/{fyInfo.loucengTop}层
+								</span>
 							</div>
 							<div>
-								<span>{fyInfo.price}</span>
-								<span>{fyInfo.price}</span>
+								<span>{fyInfo.buildArea}㎡</span>
+								<span>{fyInfo.towards}</span>
 							</div>
 						</div>
-						<div>
-							<span>发布</span>
-							<p></p>
-						</div>
-						<div>
-							<span>地址</span>
-							<p></p>
+						<hr className={Style.session_hr} />
+						<div className={Style.time_and_address}>
+							<div>
+								<span>发布</span>
+								<p>{fyInfo.inputDate}</p>
+							</div>
+							<div>
+								<span>地址</span>
+								<p>
+									{fyInfo.xzqName}-{fyInfo.districtName}-
+									{fyInfo.xqAddress}
+								</p>
+							</div>
 						</div>
 					</section>
+					{features.length && (
+						<section
+							className={`${Style.session} ${Style.bgcolor}`}
+						>
+							<h2>房源特色</h2>
+							{features.map((item, index) => (
+								<div key={index} className={Style.features}>
+									<h3>{item.label}</h3>
+									<p>{item.value}</p>
+								</div>
+							))}
+						</section>
+					)}
+					<section className={`${Style.session} ${Style.bgcolor}`}>
+						<h2>房源信息</h2>
+						<ul>
+							<li>
+								<span>房源编号</span>
+								<span>{fyInfo.code}</span>
+							</li>
+							<li>
+								<span>看房时间</span>
+								<span>
+									{fyInfo.lookDate
+										? fyInfo.lookDate
+										: "随时看房"}
+								</span>
+							</li>
+							<li>
+								<span>装修</span>
+								<span>{fyInfo.zhuangxiu || ""}</span>
+							</li>
+							<li>
+								<span>取暖方式</span>
+								<span>{fyInfo.heatWay || ""}</span>
+							</li>
+							<li>
+								<span>学区名额</span>
+								<span>{fyInfo.xuequ || ""}</span>
+							</li>
+							<li>
+								<span>交易权属</span>
+								<span>{fyInfo.jyBelong || ""}</span>
+							</li>
+							<li>
+								<span>出证日期</span>
+								<span>{fyInfo.chuzhengDate}</span>
+							</li>
+							<li>
+								<span>产权年限</span>
+								<span>{fyInfo.cqYear || ""}</span>
+							</li>
+						</ul>
+						<div>更多房源信息</div>
+					</section>
+					<section>
+						<h2>周边配套</h2>
+						<div>
+							<div id="map"></div>
+							<ul>
+								<li>
+									<span></span>
+									<span>地铁</span>
+								</li>
+								<li>
+									<span></span>
+									<span>公交</span>
+								</li>
+								<li>
+									<span></span>
+									<span>银行</span>
+								</li>
+								<li>
+									<span></span>
+									<span>学校</span>
+								</li>
+								<li>
+									<span></span>
+									<span>医院</span>
+								</li>
+								<li>
+									<span></span>
+									<span>购物</span>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<div>
+						<div>
+							<img src="" alt="分享人" />
+							<span></span>
+						</div>
+						<div>
+							<span></span>
+							<span>电话咨询</span>
+						</div>
+					</div>
 				</div>
 			);
 		}
