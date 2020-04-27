@@ -171,7 +171,7 @@ export default class Business extends Component {
 					)}
 					<section className={`${Style.session} ${Style.bgcolor}`}>
 						<h2>房源信息</h2>
-						<ul>
+						<ul className={Style.info_list}>
 							<li>
 								<span>房源编号</span>
 								<span>{fyInfo.code}</span>
@@ -209,47 +209,63 @@ export default class Business extends Component {
 								<span>{fyInfo.cqYear || ""}</span>
 							</li>
 						</ul>
-						<div>更多房源信息</div>
+						<div className={Style.more_info}>更多房源信息</div>
 					</section>
-					<section>
+					<section
+						className={`${Style.session} ${Style.bgcolor} ${Style.end_section}`}
+					>
 						<h2>周边配套</h2>
-						<div>
+						<div className={Style.map_warp}>
 							<div id="map"></div>
 							<ul>
 								<li>
-									<span></span>
+									<svg className="icon" aria-hidden="true">
+										<use xlinkHref="#icon-ditie1"></use>
+									</svg>
 									<span>地铁</span>
 								</li>
 								<li>
-									<span></span>
+									<svg className="icon" aria-hidden="true">
+										<use xlinkHref="#icon-gongjiao"></use>
+									</svg>
 									<span>公交</span>
 								</li>
 								<li>
-									<span></span>
+									<svg className="icon" aria-hidden="true">
+										<use xlinkHref="#icon-yinhang1"></use>
+									</svg>
 									<span>银行</span>
 								</li>
 								<li>
-									<span></span>
+									<svg className="icon" aria-hidden="true">
+										<use xlinkHref="#icon-xuexiao"></use>
+									</svg>
 									<span>学校</span>
 								</li>
 								<li>
-									<span></span>
+									<svg className="icon" aria-hidden="true">
+										<use xlinkHref="#icon-yaoxiang"></use>
+									</svg>
 									<span>医院</span>
 								</li>
 								<li>
-									<span></span>
+									<svg className="icon" aria-hidden="true">
+										<use xlinkHref="#icon-gouwu1"></use>
+									</svg>
 									<span>购物</span>
 								</li>
 							</ul>
 						</div>
 					</section>
-					<div>
-						<div>
+					<div className={Style.shareUser_info}>
+						<div className={Style.shareUser_name}>
 							<img src="" alt="分享人" />
 							<span></span>
 						</div>
-						<div>
-							<span></span>
+						<div className={Style.shareUser_tel}>
+							<svg className="icon" aria-hidden="true">
+								<use xlinkHref="#icon-dianhua"></use>
+							</svg>
 							<span>电话咨询</span>
 						</div>
 					</div>
