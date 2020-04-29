@@ -82,7 +82,7 @@ export default class Business extends Component {
 		});
 	}
 	handleClickToInfo() {
-		navigate("/business/info");
+		navigate("/business/info", { state: this.state.fyInfo });
 	}
 	render() {
 		const { fyInfo, isLoading, fyImg } = this.state;
