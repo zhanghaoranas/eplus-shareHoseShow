@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 
-import BusinessInfo from "./BusinessInfo.jsx";
+import BusinessInfo from "./NewHouseInfo.jsx";
 import MoreInfo from "./MoreInfo.jsx";
 
 const Business = () => {

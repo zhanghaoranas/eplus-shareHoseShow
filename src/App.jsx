@@ -3,8 +3,8 @@ import { Router, navigate } from "@reach/router";
 import queryString from "query-string";
 
 import Business from "./views/Business/Business.jsx";
-import Lease from "./views/Lease.jsx";
-import NewHouse from "./views/NewHouse.jsx";
+import Lease from "./views/Lease/Lease.jsx";
+import NewHouse from "./views/NewHouse/NewHouse.jsx";
 
 export default class App extends Component {
 	constructor() {
@@ -22,7 +22,7 @@ export default class App extends Component {
 	static getDerivedStateFromProps(nextProps, prevState) {
 		const hrefSearch =
 			window.location.search ||
-			"?fyId=14202&type=0&tel=15612270536&name=%E5%BC%A0%E6%B5%A9%E7%84%B6&city=shijiazhuang&from=timeline";
+			"?fyId=14202&type=2&tel=15612270536&name=%E5%BC%A0%E6%B5%A9%E7%84%B6&city=shijiazhuang&from=timeline";
 		const parames = queryString.parse(hrefSearch);
 		return {
 			fyId: parames.fyId,
@@ -56,9 +56,9 @@ export default class App extends Component {
 	render() {
 		return (
 			<Router>
-				<Business path="/business" />
-				<Lease path="/lease" />
-				<NewHouse path="/newHouse" />
+				<Business path="/business/*" />
+				<Lease path="/lease/*" />
+				<NewHouse path="/newHouse/*" />
 			</Router>
 		);
 	}
