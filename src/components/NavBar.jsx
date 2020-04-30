@@ -16,16 +16,18 @@ class NavBar extends Component {
 
 	render() {
 		return (
-			<div className={Style.navBar}>
-				<span onClick={() => this.handleBack()}>
-					<svg className="icon" aria-hidden="true">
-						<use xlinkHref="#icon-fanhui"></use>
-					</svg>
-				</span>
-				<div>
-					<span>{this.props.title}</span>
+			<div className={Style.navBar_warp}>
+				<div className={Style.navBar}>
+					<span onClick={() => this.handleBack()}>
+						<svg className="icon" aria-hidden="true">
+							<use xlinkHref="#icon-fanhui"></use>
+						</svg>
+					</span>
+					<div>
+						<span>{this.props.title}</span>
+					</div>
+					<span></span>
 				</div>
-				<span></span>
 			</div>
 		);
 	}

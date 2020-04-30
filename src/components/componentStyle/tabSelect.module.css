@@ -1,0 +1,33 @@
+.tabSelect_warp {
+	border-bottom: 0.5px solid var(--borderColor);
+	padding: 0 30px;
+	background-color: #ffffff;
+	position: fixed;
+	width: 100vw;
+	box-sizing: border-box;
+}
+.tabSelect {
+	white-space: nowrap;
+	overflow: auto;
+
+	& > li {
+		display: inline-block;
+		margin-right: 48px;
+		height: 87px;
+		line-height: 88px;
+		font-size: 28px;
+		color: var(--black-ordinary);
+		font-weight: 300;
+	}
+	& > li:last-child {
+		margin-right: 0;
+	}
+	& > .activeTabItem {
+		color: var(--primaryColor);
+		font-weight: 700;
+	}
+}
+
+.tabSelect::-webkit-scrollbar {
+	display: none;
+}

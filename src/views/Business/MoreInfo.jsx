@@ -1,27 +1,31 @@
 import React, { Component } from "react";
 import NavBar from "../../components/NavBar.jsx";
+import TabSelect from "../../components/TabSelect.jsx";
+
+import Style from "./moreInfo.module.css";
 export default class MoreInfo extends Component {
 	constructor(props) {
 		super(props);
+		window.scrollTo(0, 0);
 	}
 	render() {
 		const fyInfo = this.props.location.state;
-		console.log(fyInfo);
+		const labList = [
+			"房源信息",
+			"交易信息",
+			"业主信息",
+			"特色信息",
+			"生活信息",
+			"建筑信息",
+		];
 		return (
 			<div>
 				<NavBar title="房源信息"></NavBar>
-				<ul>
-					<li>房源信息</li>
-					<li>交易信息</li>
-					<li>业主信息</li>
-					<li>特色信息</li>
-					<li>生活信息</li>
-					<li>建筑信息</li>
-				</ul>
-				<ul>
+				<TabSelect labList={labList}></TabSelect>
+				<ul className={Style.type}>
 					<li>
 						<h3>房源信息</h3>
-						<ul>
+						<ul className={Style.item}>
 							<li>
 								<span>户型</span>
 								<span>
@@ -92,7 +96,7 @@ export default class MoreInfo extends Component {
 					</li>
 					<li>
 						<h3>交易信息</h3>
-						<ul>
+						<ul className={Style.item}>
 							<li>
 								<span>交易权属</span>
 								<span>{fyInfo.jyBelong || ""}</span>
@@ -130,7 +134,7 @@ export default class MoreInfo extends Component {
 					</li>
 					<li>
 						<h3>业主信息</h3>
-						<ul>
+						<ul className={Style.item}>
 							<li>
 								<span>联系人是否为业主</span>
 								<span>{fyInfo.mmfyOwner.ifOwner || ""}</span>
@@ -155,7 +159,7 @@ export default class MoreInfo extends Component {
 					</li>
 					<li>
 						<h3>特色信息</h3>
-						<ul>
+						<ul className={Style.item}>
 							<li>
 								<span>学区名额</span>
 								<span>{fyInfo.xuequ || ""}</span>
@@ -188,7 +192,7 @@ export default class MoreInfo extends Component {
 					</li>
 					<li>
 						<h3>生活信息</h3>
-						<ul>
+						<ul className={Style.item}>
 							<li>
 								<span>供暖方式</span>
 								<span>{fyInfo.heatWay || ""}</span>
@@ -228,7 +232,7 @@ export default class MoreInfo extends Component {
 					</li>
 					<li>
 						<h3>建筑信息</h3>
-						<ul>
+						<ul className={Style.item}>
 							<li>
 								<span>座栋数</span>
 								<span>{fyInfo.zuodongNum || ""}</span>
