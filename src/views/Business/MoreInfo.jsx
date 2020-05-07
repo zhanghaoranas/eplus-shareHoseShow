@@ -7,23 +7,70 @@ export default class MoreInfo extends Component {
 	constructor(props) {
 		super(props);
 		window.scrollTo(0, 0);
+		this.state = {
+			labList: [
+				{
+					label: "房源信息",
+					id: "houseInfo",
+					scrollTop: 0,
+				},
+				{
+					label: "交易信息",
+					id: "dealInfo",
+					scrollTop: 0,
+				},
+				{
+					label: "业主信息",
+					id: "ownerInfo",
+					scrollTop: 0,
+				},
+				{
+					label: "特色信息",
+					id: "characteristicInfo",
+					scrollTop: 0,
+				},
+				{
+					label: "生活信息",
+					id: "lifeInfo",
+					scrollTop: 0,
+				},
+				{
+					label: "建筑信息",
+					id: "buildInfo",
+					scrollTop: 0,
+				},
+			],
+		};
 	}
+	componentDidMount() {
+		this.setScrollTop();
+	}
+	setScrollTop() {
+		const labList = this.state.labList;
+		labList.forEach((item) => {
+			const curElement = document.querySelector(`#${item.id}`);
+			item.scrollTop = curElement.offsetTop - 107;
+		});
+		window.onscroll = (event) => {
+			// 顺序不能乱
+			const index = this.state.labList.filter(
+				(item) => item.scrollTop < window.scrollY
+			).length;
+			// 顺序可以乱
+
+			console.log(index);
+		};
+	}
+
 	render() {
 		const fyInfo = this.props.location.state;
-		const labList = [
-			"房源信息",
-			"交易信息",
-			"业主信息",
-			"特色信息",
-			"生活信息",
-			"建筑信息",
-		];
+		const labList = this.state.labList;
 		return (
 			<div>
 				<NavBar title="房源信息"></NavBar>
 				<TabSelect labList={labList}></TabSelect>
 				<ul className={Style.type}>
-					<li>
+					<li id="houseInfo">
 						<h3>房源信息</h3>
 						<ul className={Style.item}>
 							<li>
@@ -94,7 +141,7 @@ export default class MoreInfo extends Component {
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li id="dealInfo">
 						<h3>交易信息</h3>
 						<ul className={Style.item}>
 							<li>
@@ -132,7 +179,7 @@ export default class MoreInfo extends Component {
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li id="ownerInfo">
 						<h3>业主信息</h3>
 						<ul className={Style.item}>
 							<li>
@@ -157,7 +204,7 @@ export default class MoreInfo extends Component {
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li id="characteristicInfo">
 						<h3>特色信息</h3>
 						<ul className={Style.item}>
 							<li>
@@ -190,7 +237,7 @@ export default class MoreInfo extends Component {
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li id="lifeInfo">
 						<h3>生活信息</h3>
 						<ul className={Style.item}>
 							<li>
@@ -230,7 +277,7 @@ export default class MoreInfo extends Component {
 							</li>
 						</ul>
 					</li>
-					<li>
+					<li id="buildInfo">
 						<h3>建筑信息</h3>
 						<ul className={Style.item}>
 							<li>

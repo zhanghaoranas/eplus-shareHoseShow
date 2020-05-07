@@ -1,3 +1,7 @@
+.fixed_placeholder {
+	height: 87px;
+	width: 100vw;
+}
 .tabSelect_warp {
 	border-bottom: 0.5px solid var(--borderColor);
 	padding: 0 30px;

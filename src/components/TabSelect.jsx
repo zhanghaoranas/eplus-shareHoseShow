@@ -7,26 +7,28 @@ class TabSelect extends Component {
 			active: 0,
 		};
 	}
-	handleClickTab(index) {
+	handleClickTab(index, item) {
 		this.setState({
 			active: index,
 		});
-		console.log(index);
+		window.scrollTo(0, item.scrollTop);
 	}
 	render() {
 		const { active } = this.state;
-		const tabItem = this.props.labList.map((label, index) => (
+		const tabItem = this.props.labList.map((item, index) => (
 			<li
 				className={index === active ? Style.activeTabItem : undefined}
-				onClick={() => this.handleClickTab(index)}
+				onClick={() => this.handleClickTab(index, item)}
 				key={index}
 			>
-				{label}
+				{item.label}
 			</li>
 		));
 		return (
-			<div className={Style.tabSelect_warp}>
-				<ul className={Style.tabSelect}>{tabItem}</ul>
+			<div className={Style.fixed_placeholder}>
+				<div className={Style.tabSelect_warp}>
+					<ul className={Style.tabSelect}>{tabItem}</ul>
+				</div>
 			</div>
 		);
 	}

@@ -20,7 +20,6 @@
 		line-height: 42px;
 		& > span:first-child {
 			color: var(--black-light);
-			display: inline-block;
 			width: 5em;
 		}
 		& > span:last-child {
