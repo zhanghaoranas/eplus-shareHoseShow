@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Swiper from "react-id-swiper";
-import "swiper/css/swiper.min.css";
 import Style from "./componentStyle/swiper.module.css";
 
 export default function FySwiper(props) {

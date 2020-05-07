@@ -95,6 +95,11 @@ module.exports = {
 		},
 	},
 	stats: "errors-only",
+	externals: {
+		react: "React",
+		"react-dom": "ReactDOM",
+		swiper: "Swiper",
+	},
 	output: {
 		filename: "js/bundle.[hash].js",
 		path: path.resolve(__dirname, "dist"),
