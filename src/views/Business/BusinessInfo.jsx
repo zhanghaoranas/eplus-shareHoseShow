@@ -4,8 +4,9 @@ import FySwiper from "../../components/FySwiper.jsx";
 import Tag from "../../components/Tag.jsx";
 import { navigate } from "@reach/router";
 import Style from "./business.module.css";
-import { baseUrl, baseImgUrl } from "../../config.js";
+import { baseUrl, baseImgUrl, mapKey } from "../../config.js";
 import noImg from "../../static/images/dai.jpg";
+import loadMap from "../../utils/importBMap.js";
 
 export default class Business extends Component {
 	constructor(props) {
@@ -40,6 +41,7 @@ export default class Business extends Component {
 			this.setState({
 				fyInfo: data,
 			});
+			this.loadMap();
 			this.getFyImg();
 		} catch (error) {
 			console.log(error);
@@ -83,6 +85,21 @@ export default class Business extends Component {
 	}
 	handleClickToInfo() {
 		navigate("/business/info", { state: this.state.fyInfo });
+	}
+	loadMap() {
+		loadMap(mapKey).then((res) => {
+			this.initMap();
+		});
+	}
+	initMap() {
+		const { longitude, latitude } = this.state.fyInfo;
+		const map = new BMap.Map("map", {
+			enableMapClick: false,
+		});
+		const point = new BMap.Point(longitude, latitude); // 小区的坐标。
+		map.centerAndZoom(point, 18);
+		var marker = new BMap.Marker(point); // 创建标注
+		map.addOverlay(marker);
 	}
 	render() {
 		const { fyInfo, isLoading, fyImg } = this.state;

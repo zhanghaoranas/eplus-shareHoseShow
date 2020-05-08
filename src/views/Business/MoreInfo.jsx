@@ -52,9 +52,10 @@ export default class MoreInfo extends Component {
 	}
 	setScrollTop() {
 		const { labList } = this.state;
+		const paddingTop = document.querySelector("#houseInfo").offsetTop;
 		labList.forEach((item) => {
 			const curElement = document.querySelector(`#${item.id}`);
-			item.scrollTop = curElement.offsetTop - 107;
+			item.scrollTop = curElement.offsetTop - paddingTop;
 		});
 		window.addEventListener("scroll", this.handleScroll);
 	}
