@@ -7,6 +7,8 @@ export default class MoreInfo extends Component {
 	constructor(props) {
 		super(props);
 		window.scrollTo(0, 0);
+		this.tabSelect = React.createRef();
+		this.handleScroll = this.handleScroll.bind(this);
 		this.state = {
 			labList: [
 				{
@@ -45,30 +47,36 @@ export default class MoreInfo extends Component {
 	componentDidMount() {
 		this.setScrollTop();
 	}
+	componentWillUnmount() {
+		window.removeEventListener("scroll", this.handleScroll);
+	}
 	setScrollTop() {
-		const labList = this.state.labList;
+		const { labList } = this.state;
 		labList.forEach((item) => {
 			const curElement = document.querySelector(`#${item.id}`);
 			item.scrollTop = curElement.offsetTop - 107;
 		});
-		window.onscroll = (event) => {
-			// 顺序不能乱
-			const index = this.state.labList.filter(
-				(item) => item.scrollTop < window.scrollY
-			).length;
-			// 顺序可以乱
-
-			console.log(index);
-		};
+		window.addEventListener("scroll", this.handleScroll);
 	}
-
+	handleScroll() {
+		// 顺序不能乱
+		const { labList } = this.state;
+		const index = labList.filter(
+			(item) =>
+				item.scrollTop < window.scrollY ||
+				item.scrollTop === window.scrollY
+		).length;
+		if (index > 0) {
+			this.tabSelect.current.tabItemShow(index - 1);
+		}
+	}
 	render() {
 		const fyInfo = this.props.location.state;
 		const labList = this.state.labList;
 		return (
 			<div>
 				<NavBar title="房源信息"></NavBar>
-				<TabSelect labList={labList}></TabSelect>
+				<TabSelect labList={labList} ref={this.tabSelect}></TabSelect>
 				<ul className={Style.type}>
 					<li id="houseInfo">
 						<h3>房源信息</h3>
