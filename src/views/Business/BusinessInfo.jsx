@@ -86,18 +86,36 @@ export default class Business extends Component {
 	handleClickToInfo() {
 		navigate("/business/info", { state: this.state.fyInfo });
 	}
+	handleClickToMap() {
+		const { longitude, latitude } = this.state.fyInfo;
+		navigate("/map", {
+			state: {
+				longitude,
+				latitude,
+			},
+		});
+	}
+	/**
+	 * @description 加载地图
+	 */
 	loadMap() {
 		loadMap(mapKey).then((res) => {
 			this.initMap();
 		});
 	}
+	/**
+	 * @description 初始化地图
+	 */
 	initMap() {
 		const { longitude, latitude } = this.state.fyInfo;
 		const map = new BMap.Map("map", {
 			enableMapClick: false,
 		});
+		map.disableDragging();
+		map.disableDoubleClickZoom();
+		map.disablePinchToZoom();
 		const point = new BMap.Point(longitude, latitude); // 小区的坐标。
-		map.centerAndZoom(point, 18);
+		map.centerAndZoom(point, 16);
 		var marker = new BMap.Marker(point); // 创建标注
 		map.addOverlay(marker);
 	}
@@ -175,7 +193,7 @@ export default class Business extends Component {
 							</div>
 						</div>
 					</section>
-					{features.length && (
+					{features.length !== 0 && (
 						<section
 							className={`${Style.session} ${Style.bgcolor}`}
 						>
@@ -239,42 +257,45 @@ export default class Business extends Component {
 						className={`${Style.session} ${Style.bgcolor} ${Style.end_section}`}
 					>
 						<h2>周边配套</h2>
-						<div className={Style.map_warp}>
+						<div
+							className={Style.map_warp}
+							onClick={() => this.handleClickToMap()}
+						>
 							<div id="map"></div>
 							<ul>
 								<li>
 									<svg className="icon" aria-hidden="true">
-										<use xlinkHref="#icon-ditie1"></use>
+										<use xlinkHref="#iconditie1"></use>
 									</svg>
 									<span>地铁</span>
 								</li>
 								<li>
 									<svg className="icon" aria-hidden="true">
-										<use xlinkHref="#icon-gongjiao"></use>
+										<use xlinkHref="#icongongjiao"></use>
 									</svg>
 									<span>公交</span>
 								</li>
 								<li>
 									<svg className="icon" aria-hidden="true">
-										<use xlinkHref="#icon-yinhang1"></use>
+										<use xlinkHref="#iconyinhang1"></use>
 									</svg>
 									<span>银行</span>
 								</li>
 								<li>
 									<svg className="icon" aria-hidden="true">
-										<use xlinkHref="#icon-xuexiao"></use>
+										<use xlinkHref="#iconxuexiao"></use>
 									</svg>
 									<span>学校</span>
 								</li>
 								<li>
 									<svg className="icon" aria-hidden="true">
-										<use xlinkHref="#icon-yaoxiang"></use>
+										<use xlinkHref="#iconyaoxiang"></use>
 									</svg>
 									<span>医院</span>
 								</li>
 								<li>
 									<svg className="icon" aria-hidden="true">
-										<use xlinkHref="#icon-gouwu1"></use>
+										<use xlinkHref="#icongouwu1"></use>
 									</svg>
 									<span>购物</span>
 								</li>
@@ -288,7 +309,7 @@ export default class Business extends Component {
 						</div>
 						<div className={Style.shareUser_tel}>
 							<svg className="icon" aria-hidden="true">
-								<use xlinkHref="#icon-dianhua"></use>
+								<use xlinkHref="#icondianhua"></use>
 							</svg>
 							<span>电话咨询</span>
 						</div>
