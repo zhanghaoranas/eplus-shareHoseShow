@@ -5,9 +5,10 @@ import Tag from "../../components/Tag.jsx";
 import { navigate } from "@reach/router";
 import Style from "./business.module.css";
 import { baseUrl, baseImgUrl, mapKey } from "../../config.js";
+import { formatTime } from "../../utils/index.js";
 import noImg from "../../static/images/dai.jpg";
 import loadMap from "../../utils/importBMap.js";
-
+import userHead from "../../image/head.png";
 export default class Business extends Component {
 	constructor(props) {
 		super(props);
@@ -107,6 +108,7 @@ export default class Business extends Component {
 	 * @description 初始化地图
 	 */
 	initMap() {
+		console.log(document.getElementById("map"));
 		const { longitude, latitude } = this.state.fyInfo;
 		const map = new BMap.Map("map", {
 			enableMapClick: false,
@@ -120,7 +122,7 @@ export default class Business extends Component {
 		map.addOverlay(marker);
 	}
 	render() {
-		const { fyInfo, isLoading, fyImg } = this.state;
+		const { fyInfo, isLoading, fyImg, shareUserInfo } = this.state;
 
 		if (isLoading) {
 			return <Loading type="spinningBubbles" color="#FA8072"></Loading>;
@@ -182,7 +184,7 @@ export default class Business extends Component {
 						<div className={Style.time_and_address}>
 							<div>
 								<span>发布</span>
-								<p>{fyInfo.inputDate}</p>
+								<p>{formatTime(fyInfo.inputDate)}</p>
 							</div>
 							<div>
 								<span>地址</span>
@@ -223,27 +225,27 @@ export default class Business extends Component {
 							</li>
 							<li>
 								<span>装修</span>
-								<span>{fyInfo.zhuangxiu || ""}</span>
+								<span>{fyInfo.zhuangxiu || "暂无数据"}</span>
 							</li>
 							<li>
 								<span>取暖方式</span>
-								<span>{fyInfo.heatWay || ""}</span>
+								<span>{fyInfo.heatWay || "暂无数据"}</span>
 							</li>
 							<li>
 								<span>学区名额</span>
-								<span>{fyInfo.xuequ || ""}</span>
+								<span>{fyInfo.xuequ || "暂无数据"}</span>
 							</li>
 							<li>
 								<span>交易权属</span>
-								<span>{fyInfo.jyBelong || ""}</span>
+								<span>{fyInfo.jyBelong || "暂无数据"}</span>
 							</li>
 							<li>
 								<span>出证日期</span>
-								<span>{fyInfo.chuzhengDate}</span>
+								<span>{fyInfo.chuzhengDate || "暂无数据"}</span>
 							</li>
 							<li>
 								<span>产权年限</span>
-								<span>{fyInfo.cqYear || ""}</span>
+								<span>{fyInfo.cqYear || "暂无数据"}</span>
 							</li>
 						</ul>
 						<div
@@ -304,14 +306,23 @@ export default class Business extends Component {
 					</section>
 					<div className={Style.shareUser_info}>
 						<div className={Style.shareUser_name}>
-							<img src="" alt="分享人" />
-							<span></span>
+							<img
+								src={
+									shareUserInfo.image
+										? baseImgUrl + shareUserInfo.image
+										: userHead
+								}
+								alt="分享人"
+							/>
+							<span>{shareUserInfo.name}</span>
 						</div>
 						<div className={Style.shareUser_tel}>
-							<svg className="icon" aria-hidden="true">
-								<use xlinkHref="#icondianhua"></use>
-							</svg>
-							<span>电话咨询</span>
+							<a href={`tel:${shareUserInfo.tel}`}>
+								<svg className="icon" aria-hidden="true">
+									<use xlinkHref="#icondianhua"></use>
+								</svg>
+								<span>电话咨询</span>
+							</a>
 						</div>
 					</div>
 				</div>

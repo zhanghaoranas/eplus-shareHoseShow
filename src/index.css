@@ -13,6 +13,9 @@
 	--attentionColor: #ff5236;
 }
 
+:global(html) {
+	line-height: 1;
+}
 :global(#root) {
 	background-color: #f4f5f7;
 }

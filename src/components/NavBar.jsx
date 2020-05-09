@@ -20,7 +20,7 @@ class NavBar extends Component {
 				<div className={Style.navBar}>
 					<span onClick={() => this.handleBack()}>
 						<svg className="icon" aria-hidden="true">
-							<use xlinkHref="#icon-fanhui"></use>
+							<use xlinkHref="#iconfanhui"></use>
 						</svg>
 					</span>
 					<div>

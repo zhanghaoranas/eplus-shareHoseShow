@@ -17,13 +17,14 @@ export default class App extends Component {
 			shareUserInfo: {
 				name: "",
 				tel: "",
+				image: "",
 			},
 		};
 	}
 	static getDerivedStateFromProps(nextProps, prevState) {
 		const hrefSearch =
 			window.location.search ||
-			"?fyId=61845&type=0&tel=15612270536&name=%E5%BC%A0%E6%B5%A9%E7%84%B6&city=shijiazhuang&from=timeline";
+			"?fyId=61845&type=0&tel=15612270536&name=%E5%BC%A0%E6%B5%A9%E7%84%B6&city=shijiazhuang&image=";
 		const parames = queryString.parse(hrefSearch);
 		return {
 			fyId: parames.fyId,
@@ -32,6 +33,7 @@ export default class App extends Component {
 			shareUserInfo: {
 				name: parames.name,
 				tel: parames.tel,
+				image: parames.image,
 			},
 		};
 	}
