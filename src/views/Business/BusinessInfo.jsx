@@ -42,7 +42,6 @@ export default class Business extends Component {
 			this.setState({
 				fyInfo: data,
 			});
-			this.loadMap();
 			this.getFyImg();
 		} catch (error) {
 			console.log(error);
@@ -73,6 +72,7 @@ export default class Business extends Component {
 				fyImg: effectiveImg,
 				isLoading: false,
 			});
+			this.loadMap();z`
 		}
 	}
 

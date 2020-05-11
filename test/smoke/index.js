@@ -24,7 +24,6 @@ rimaraf("./dist", () => {
 		if (stats.hasWarnings()) {
 			console.warn(info.warnings);
 		}
-		console.log("开始执行测试用例");
 		mocha.addFile(path.join(__dirname, "html-test.js"));
 		mocha.addFile(path.join(__dirname, "css-js-test.js"));
 		mocha.run();
