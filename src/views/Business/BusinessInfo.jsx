@@ -72,7 +72,7 @@ export default class Business extends Component {
 				fyImg: effectiveImg,
 				isLoading: false,
 			});
-			this.loadMap();z`
+			this.loadMap();
 		}
 	}
 
@@ -108,7 +108,6 @@ export default class Business extends Component {
 	 * @description 初始化地图
 	 */
 	initMap() {
-		console.log(document.getElementById("map"));
 		const { longitude, latitude } = this.state.fyInfo;
 		const map = new BMap.Map("map", {
 			enableMapClick: false,
