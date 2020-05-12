@@ -1,12 +1,16 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+	.BundleAnalyzerPlugin;
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const webpack = require("webpack");
 const devMode = process.env.NODE_ENV === "development";
 
-module.exports = {
+const smp = new SpeedMeasurePlugin();
+module.exports = smp.wrap({
 	entry: "./src/index.jsx",
 	devtool: devMode ? "inline-source-map" : "",
 	devServer: {
@@ -60,7 +64,15 @@ module.exports = {
 			{
 				test: /\.(jsx|js)$/,
 				exclude: /node_modules/,
-				loader: "babel-loader",
+				use: [
+					{
+						loader: "thread-loader",
+						options: {
+							workers: 4,
+						},
+					},
+					"babel-loader",
+				],
 			},
 			{
 				test: /\.(png|svg|jpg|gif)$/,
@@ -88,6 +100,7 @@ module.exports = {
 		}),
 		new FriendlyErrorsWebpackPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
+		new BundleAnalyzerPlugin(),
 	],
 	optimization: {
 		splitChunks: {
@@ -105,4 +118,4 @@ module.exports = {
 		path: path.resolve(__dirname, "dist"),
 		publicPath: "/",
 	},
-};
+});
