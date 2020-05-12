@@ -120,6 +120,10 @@
 		}
 	}
 }
+.preferential_policy {
+	font-size: 28px;
+	line-height: 1.6;
+}
 .features {
 	& > h3 {
 		font-size: 32px;
@@ -148,7 +152,41 @@
 		line-height: normal;
 	}
 }
-
+.hx_warp {
+	/* 如果设置为scroll 内容也会垂直滚动 */
+	margin-top: 40px;
+	overflow: auto;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	& > ul {
+		white-space: nowrap;
+		/* 消除幽灵空白节点 */
+		font-size: 0;
+	}
+}
+.hx_item {
+	display: inline-block;
+	margin-right: 24px;
+	&:last-child {
+		margin-right: 0;
+	}
+}
+.hx_figure {
+	margin: 0;
+	& > img {
+		width: 280px;
+		height: 280px;
+		border-radius: 8px;
+		border: 0.5px solid var(--borderColor);
+	}
+}
+.hx_figcaption {
+	display: flex;
+	justify-content: space-between;
+	color: var(--black-deep);
+	font-size: 24px;
+}
 .info_list {
 	margin-top: 40px;
 	font-size: 28px;

@@ -7,10 +7,29 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const webpack = require("webpack");
+const smp = new SpeedMeasurePlugin();
+
 const devMode = process.env.NODE_ENV === "development";
 
-const smp = new SpeedMeasurePlugin();
-module.exports = smp.wrap({
+const webpackPlugins = [
+	new HtmlWebpackPlugin({
+		title: "移动端 webpack搭建",
+		template: "template/index.html",
+	}),
+	new webpack.ProgressPlugin(),
+	new CleanWebpackPlugin(),
+	new MiniCssExtractPlugin({
+		filename: devMode ? "css/[name].css" : "css/[name].[hash:6].css",
+		chunkFilename: devMode ? "css/[id].css" : "css/[id].[hash:6].css",
+	}),
+	new FriendlyErrorsWebpackPlugin(),
+	new webpack.HotModuleReplacementPlugin(),
+];
+if (!devMode) {
+	webpackPlugins.push(new BundleAnalyzerPlugin());
+}
+// 使用smp.wrap 热更新会报错。
+module.exports = {
 	entry: "./src/index.jsx",
 	devtool: devMode ? "inline-source-map" : "",
 	devServer: {
@@ -87,22 +106,9 @@ module.exports = smp.wrap({
 			},
 		],
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			title: "移动端 webpack搭建",
-			template: "template/index.html",
-		}),
-		new webpack.ProgressPlugin(),
-		new CleanWebpackPlugin(),
-		new MiniCssExtractPlugin({
-			filename: devMode ? "css/[name].css" : "css/[name].[hash:6].css",
-			chunkFilename: devMode ? "css/[id].css" : "css/[id].[hash:6].css",
-		}),
-		new FriendlyErrorsWebpackPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
-		new BundleAnalyzerPlugin(),
-	],
+	plugins: webpackPlugins,
 	optimization: {
+		runtimeChunk: true,
 		splitChunks: {
 			chunks: "all",
 		},
@@ -118,4 +124,4 @@ module.exports = smp.wrap({
 		path: path.resolve(__dirname, "dist"),
 		publicPath: "/",
 	},
-});
+};

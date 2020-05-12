@@ -15,6 +15,7 @@ export default class NewHouseInfo extends Component {
 		this.state = {
 			...props.location.state,
 			fyInfo: null,
+			hxInfo: [],
 			fyImg: [
 				{
 					src: noImg,
@@ -50,9 +51,12 @@ export default class NewHouseInfo extends Component {
 			tabSelectActive: 0,
 			isLoading: true,
 		};
+		this.handleScroll = this.handleScroll.bind(this);
+		this.canScroll = true;
 	}
 	componentDidMount() {
 		this.getFyInfoById();
+		this.getHXListById();
 	}
 	async getFyInfoById() {
 		const url = baseUrl + `xinfang/xffy/share?id=${this.state.fyId}`;
@@ -75,7 +79,29 @@ export default class NewHouseInfo extends Component {
 			console.log(error);
 		}
 	}
-
+	async getHXListById() {
+		const url = baseUrl + `xinfang/xffyLayout/sharelist`;
+		const headers = new Headers({
+			CITY: this.state.city,
+			"Content-Type": "application/json;charset=UTF-8",
+		});
+		try {
+			const { data } = await fetch(url, {
+				method: "post",
+				body: JSON.stringify({
+					fyId: +this.state.fyId,
+				}),
+				headers: headers,
+			}).then((res) => {
+				return res.json();
+			});
+			this.setState({
+				hxInfo: data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
 	async getFyImg() {
 		// 1.获取图片路径，2. new Image 加载图片 3. 将加载成功的路径添加到 房源图片中
 		const { imgLoupan } = this.state.fyInfo;
@@ -122,14 +148,31 @@ export default class NewHouseInfo extends Component {
 		});
 	}
 	handleClickTab(item, index) {
+		this.canScroll = false;
 		this.setState({
 			tabSelectActive: index,
 		});
-		window.scrollTo(0, item.scrollTop);
+		window.scrollTo(0, item.scrollTop); // 滚动是在函数完成之后才执行。
+		setTimeout(() => {
+			this.canScroll = true;
+		});
+	}
+	handleScroll() {
+		if (this.canScroll) {
+			const { tabSelect } = this.state;
+			const index = tabSelect.filter(
+				(item) =>
+					item.scrollTop < window.scrollY ||
+					item.scrollTop === window.scrollY
+			).length;
+			this.setState({
+				tabSelectActive: index - 1 < 0 ? 0 : index - 1,
+			});
+		}
 	}
 	setTabScrollTop() {
 		const { tabSelect } = this.state;
-		const paddingTop = document.querySelector("#tabSelect").offsetTop;
+		const paddingTop = document.querySelector("#tabSelect").offsetHeight;
 		tabSelect.forEach((item) => {
 			const curElement = document.querySelector(`#${item.id}`);
 			item.scrollTop = curElement.offsetTop - paddingTop;
@@ -212,6 +255,7 @@ export default class NewHouseInfo extends Component {
 			shareUserInfo,
 			tabSelect,
 			tabSelectActive,
+			hxInfo,
 		} = this.state;
 
 		if (isLoading) {
@@ -294,7 +338,9 @@ export default class NewHouseInfo extends Component {
 						>
 							<h2>楼盘卖点</h2>
 							{fyInfo.preferentialPolicy && (
-								<p>（优惠政策）{fyInfo.preferentialPolicy}</p>
+								<p className={Style.preferential_policy}>
+									（优惠政策）{fyInfo.preferentialPolicy}
+								</p>
 							)}
 							{features.map((item, index) => (
 								<div key={index} className={Style.features}>
@@ -309,6 +355,30 @@ export default class NewHouseInfo extends Component {
 						id="fyHx"
 					>
 						<h2>户型介绍</h2>
+						<div className={Style.hx_warp}>
+							<ul>
+								{hxInfo.map((item, index) => (
+									<li key={index} className={Style.hx_item}>
+										<figure className={Style.hx_figure}>
+											<img
+												src={baseImgUrl + item.images}
+												alt="户型图片"
+											/>
+											<figcaption
+												className={Style.hx_figcaption}
+											>
+												<span>{item.name}户型</span>
+												<span>
+													{item.shi}室{item.ting}厅
+													{item.wei}卫
+												</span>
+												<span>{item.area}㎡</span>
+											</figcaption>
+										</figure>
+									</li>
+								))}
+							</ul>
+						</div>
 					</section>
 					<section
 						className={`${Style.session} ${Style.bgcolor}`}
