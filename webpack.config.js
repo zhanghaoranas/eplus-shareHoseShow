@@ -6,6 +6,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 	.BundleAnalyzerPlugin;
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
 const smp = new SpeedMeasurePlugin();
 
@@ -112,6 +113,12 @@ module.exports = {
 		splitChunks: {
 			chunks: "all",
 		},
+		minimizer: [
+			// 并行压缩
+			new TerserPlugin({
+				parallel: true,
+			}),
+		],
 	},
 	stats: "errors-only",
 	externals: {
