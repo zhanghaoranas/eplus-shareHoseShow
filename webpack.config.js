@@ -133,6 +133,7 @@ module.exports = {
 		"react-dom": "ReactDOM",
 		swiper: "Swiper",
 	},
+	extensions: [".js", ".jsx", ".css", ".json"],
 	output: {
 		filename: "js/bundle.[hash].js",
 		path: path.resolve(__dirname, "dist"),
