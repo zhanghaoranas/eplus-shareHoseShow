@@ -27,7 +27,7 @@ const webpackPlugins = [
 	new webpack.HotModuleReplacementPlugin(),
 ];
 if (!devMode) {
-	webpackPlugins.push(new BundleAnalyzerPlugin());
+	// webpackPlugins.push(new BundleAnalyzerPlugin());
 }
 // 使用smp.wrap 热更新会报错。
 module.exports = {
@@ -91,7 +91,12 @@ module.exports = {
 							workers: 4,
 						},
 					},
-					"babel-loader",
+					{
+						loader: "babel-loader",
+						options: {
+							cacheDirectory: true,
+						},
+					},
 				],
 			},
 			{
@@ -113,10 +118,12 @@ module.exports = {
 		splitChunks: {
 			chunks: "all",
 		},
+		minimizer: true,
 		minimizer: [
 			// 并行压缩
 			new TerserPlugin({
 				parallel: true,
+				cache: true,
 			}),
 		],
 	},
