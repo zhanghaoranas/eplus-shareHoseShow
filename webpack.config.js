@@ -118,7 +118,6 @@ module.exports = {
 		splitChunks: {
 			chunks: "all",
 		},
-		minimizer: true,
 		minimizer: [
 			// 并行压缩
 			new TerserPlugin({
