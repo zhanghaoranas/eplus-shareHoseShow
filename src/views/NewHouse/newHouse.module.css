@@ -163,6 +163,7 @@
 		white-space: nowrap;
 		/* 消除幽灵空白节点 */
 		font-size: 0;
+		height: 310px;
 	}
 }
 .hx_item {
@@ -291,6 +292,7 @@
 .shareUser_tel {
 	width: 456px;
 	background-color: var(--primaryColor);
+	border-top: 0.5px solid var(--primaryColor);
 	color: #ffffff;
 	font-size: 32px;
 	text-align: center;

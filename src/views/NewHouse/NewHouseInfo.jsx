@@ -145,7 +145,7 @@ export default class NewHouseInfo extends Component {
 		});
 	}
 	handleClickToInfo() {
-		navigate("/business/info", { state: this.state.fyInfo });
+		navigate("/newHouse/info", { state: this.state.fyInfo });
 	}
 	handleClickToMap() {
 		const { longitude, latitude } = this.state.fyInfo;
@@ -161,12 +161,15 @@ export default class NewHouseInfo extends Component {
 		this.setState({
 			tabSelectActive: index
 		});
+
 		window.scrollTo(0, item.scrollTop); // 滚动是在函数完成之后才执行。
+		console.log("窗口滚动是异步的吗？ 是的");
 		setTimeout(() => {
 			this.canScroll = true;
 		});
 	}
 	handleScroll() {
+		console.log("滚动了");
 		if (this.canScroll) {
 			const { tabSelect } = this.state;
 			const index = tabSelect.filter(
@@ -187,6 +190,9 @@ export default class NewHouseInfo extends Component {
 			item.scrollTop = curElement.offsetTop - paddingTop;
 		});
 		window.addEventListener("scroll", this.handleScroll);
+	}
+	componentWillUnmount() {
+		window.removeEventListener("scroll", this.handleScroll);
 	}
 	/**
 	 * @description 加载地图
@@ -333,7 +339,7 @@ export default class NewHouseInfo extends Component {
 						<div className={Style.tag_warp}>{tagMap}</div>
 						<div className={Style.activeInfo}>
 							<div>
-								<span>{fyInfo.price}万元</span>
+								<span>{fyInfo.price}元/㎡</span>
 								<span>价格</span>
 							</div>
 							<div>

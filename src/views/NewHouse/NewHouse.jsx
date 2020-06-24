@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 
-import BusinessInfo from "./NewHouseInfo.jsx";
+import NewHouseInfo from "./NewHouseInfo.jsx";
 import MoreInfo from "./MoreInfo.jsx";
 
-const Business = () => {
+const NewHouse = () => {
 	return (
 		<div>
 			<Router>
-				<BusinessInfo path="/" />
+				<NewHouseInfo path="/" />
 				<MoreInfo path="info" />
 			</Router>
 		</div>
 	);
 };
 
-export default Business;
+export default NewHouse;

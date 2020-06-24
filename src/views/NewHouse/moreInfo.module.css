@@ -1,0 +1,29 @@
+.type {
+	padding: 0 30px;
+	overflow: hidden;
+	background-color: #ffffff;
+	& > li {
+		& > h3 {
+			margin: 40px 0;
+			font-size: 36px;
+			color: var(--black-deep);
+		}
+	}
+}
+.item {
+	font-size: 30px;
+	padding-bottom: 20px;
+	& > li {
+		display: flex;
+		align-items: flex-start;
+		margin-bottom: 12px;
+		line-height: 42px;
+		& > span:first-child {
+			color: var(--black-light);
+			width: 5em;
+		}
+		& > span:last-child {
+			flex: 1;
+		}
+	}
+}
