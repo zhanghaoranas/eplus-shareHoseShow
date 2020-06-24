@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Loading from "../../components/Loading.jsx";
 import FySwiper from "../../components/FySwiper.jsx";
 import Tag from "../../components/Tag.jsx";
+import PhoneSwipe from "../../components/PhoneSwipe.jsx";
 import { navigate } from "@reach/router";
 import Style from "./newHouse.module.css";
 import { baseUrl, baseImgUrl, mapKey } from "../../config.js";
@@ -12,47 +13,49 @@ import userHead from "../../image/head.png";
 export default class NewHouseInfo extends Component {
 	constructor(props) {
 		super(props);
+		this.handleScroll = this.handleScroll.bind(this);
+		this.imgClick = this.imgClick.bind(this);
+		this.canScroll = true;
+		this.phoneSwipe = React.createRef();
 		this.state = {
 			...props.location.state,
 			fyInfo: null,
 			hxInfo: [],
 			fyImg: [
 				{
-					src: noImg,
-				},
+					src: noImg
+				}
 			],
 			tabSelect: [
 				{
 					name: "卖点",
 					id: "sellPoint",
-					scrollTop: 0,
+					scrollTop: 0
 				},
 				{
 					name: "户型",
 					id: "fyHx",
-					scrollTop: 0,
+					scrollTop: 0
 				},
 				{
 					name: "动态",
 					id: "dynamic",
-					scrollTop: 0,
+					scrollTop: 0
 				},
 				{
 					name: "信息",
 					id: "lpInfo",
-					scrollTop: 0,
+					scrollTop: 0
 				},
 				{
 					name: "配套",
 					id: "aroundMap",
-					scrollTop: 0,
-				},
+					scrollTop: 0
+				}
 			],
 			tabSelectActive: 0,
-			isLoading: true,
+			isLoading: true
 		};
-		this.handleScroll = this.handleScroll.bind(this);
-		this.canScroll = true;
 	}
 	componentDidMount() {
 		this.getFyInfoById();
@@ -61,18 +64,18 @@ export default class NewHouseInfo extends Component {
 	async getFyInfoById() {
 		const url = baseUrl + `xinfang/xffy/share?id=${this.state.fyId}`;
 		const headers = new Headers({
-			CITY: this.state.city,
+			CITY: this.state.city
 		});
 		try {
 			const { data } = await fetch(url, {
 				method: "get",
-				headers: headers,
-			}).then((res) => {
+				headers: headers
+			}).then(res => {
 				return res.json();
 			});
 
 			this.setState({
-				fyInfo: data,
+				fyInfo: data
 			});
 			this.getFyImg();
 		} catch (error) {
@@ -83,20 +86,20 @@ export default class NewHouseInfo extends Component {
 		const url = baseUrl + `xinfang/xffyLayout/sharelist`;
 		const headers = new Headers({
 			CITY: this.state.city,
-			"Content-Type": "application/json;charset=UTF-8",
+			"Content-Type": "application/json;charset=UTF-8"
 		});
 		try {
 			const { data } = await fetch(url, {
 				method: "post",
 				body: JSON.stringify({
-					fyId: +this.state.fyId,
+					fyId: +this.state.fyId
 				}),
-				headers: headers,
-			}).then((res) => {
+				headers: headers
+			}).then(res => {
 				return res.json();
 			});
 			this.setState({
-				hxInfo: data,
+				hxInfo: data
 			});
 		} catch (error) {
 			console.log(error);
@@ -109,18 +112,18 @@ export default class NewHouseInfo extends Component {
 		if (mainImg) {
 			let fyImg;
 			fyImg = mainImg
-				.map((item) => item.list)
+				.map(item => item.list)
 				.flat()
-				.map((item) => baseImgUrl + item.url);
+				.map(item => baseImgUrl + item.url);
 			const allImg = await Promise.all(
-				fyImg.map((src) => this.loadImg(src))
+				fyImg.map(src => this.loadImg(src))
 			);
 			const effectiveImg = allImg.filter(
-				(item) => item.status === "success"
+				item => item.status === "success"
 			);
 			this.setState({
 				fyImg: effectiveImg,
-				isLoading: false,
+				isLoading: false
 			});
 			this.loadMap();
 			this.setTabScrollTop();
@@ -131,7 +134,13 @@ export default class NewHouseInfo extends Component {
 		return new Promise((resolve, reject) => {
 			const image = new Image();
 			image.src = src;
-			image.onload = () => resolve({ src: src, status: "success" });
+			image.onload = () =>
+				resolve({
+					src: src,
+					status: "success",
+					w: image.width,
+					h: image.height
+				});
 			image.onerror = () => resolve({ src: src, status: "fail" });
 		});
 	}
@@ -143,14 +152,14 @@ export default class NewHouseInfo extends Component {
 		navigate("/map", {
 			state: {
 				longitude,
-				latitude,
-			},
+				latitude
+			}
 		});
 	}
 	handleClickTab(item, index) {
 		this.canScroll = false;
 		this.setState({
-			tabSelectActive: index,
+			tabSelectActive: index
 		});
 		window.scrollTo(0, item.scrollTop); // 滚动是在函数完成之后才执行。
 		setTimeout(() => {
@@ -161,19 +170,19 @@ export default class NewHouseInfo extends Component {
 		if (this.canScroll) {
 			const { tabSelect } = this.state;
 			const index = tabSelect.filter(
-				(item) =>
+				item =>
 					item.scrollTop < window.scrollY ||
 					item.scrollTop === window.scrollY
 			).length;
 			this.setState({
-				tabSelectActive: index - 1 < 0 ? 0 : index - 1,
+				tabSelectActive: index - 1 < 0 ? 0 : index - 1
 			});
 		}
 	}
 	setTabScrollTop() {
 		const { tabSelect } = this.state;
 		const paddingTop = document.querySelector("#tabSelect").offsetHeight;
-		tabSelect.forEach((item) => {
+		tabSelect.forEach(item => {
 			const curElement = document.querySelector(`#${item.id}`);
 			item.scrollTop = curElement.offsetTop - paddingTop;
 		});
@@ -183,7 +192,7 @@ export default class NewHouseInfo extends Component {
 	 * @description 加载地图
 	 */
 	loadMap() {
-		loadMap(mapKey).then((res) => {
+		loadMap(mapKey).then(res => {
 			this.initMap();
 		});
 	}
@@ -193,7 +202,7 @@ export default class NewHouseInfo extends Component {
 	initMap() {
 		const { longitude, latitude } = this.state.fyInfo;
 		const map = new BMap.Map("map", {
-			enableMapClick: false,
+			enableMapClick: false
 		});
 		map.disableDragging();
 		map.disableDoubleClickZoom();
@@ -215,17 +224,17 @@ export default class NewHouseInfo extends Component {
 			{ label: "教育资源", value: "education" },
 			{ label: "医疗配套", value: "hospital" },
 			{ label: "生活娱乐", value: "amusement" },
-			{ label: "绿地公园", value: "garden" },
+			{ label: "绿地公园", value: "garden" }
 		];
 
 		return pushData
-			.map((item) => {
+			.map(item => {
 				return {
 					label: item.label,
-					value: fyInfo[item.value],
+					value: fyInfo[item.value]
 				};
 			})
-			.filter((item) => item.value);
+			.filter(item => item.value);
 	}
 
 	getTabList() {
@@ -236,7 +245,7 @@ export default class NewHouseInfo extends Component {
 			ifOnly,
 			ifMan,
 			ifSubway,
-			xuequ,
+			xuequ
 		} = this.state.fyInfo;
 		ifImg ? tagList.push("图片") : null;
 		ifKey ? tagList.push("钥匙") : null;
@@ -246,7 +255,51 @@ export default class NewHouseInfo extends Component {
 		xuequ && xuequ == "是" ? tagList.push("学区") : null;
 		return tagList;
 	}
+	async showPhoneSwipe(index) {
+		const { hxInfo } = this.state;
+		const allImg = await Promise.all(
+			hxInfo.map(src => this.loadImg(baseImgUrl + src.images))
+		);
+		const items = hxInfo.map(item => ({
+			src: baseImgUrl + item.images,
+			title: `${item.name}户型${item.shi}室${item.ting}厅${item.wei}卫${item.area}㎡`,
+			w: allImg.find(img => img.src === baseImgUrl + item.images).w,
+			h: allImg.find(img => img.src === baseImgUrl + item.images).h
+		}));
+		const options = {
+			index,
+			shareButtons: [
+				{
+					id: "download",
+					label: "Download image",
+					url: "{{raw_image_url}}",
+					download: true
+				}
+			]
+		};
+		this.phoneSwipe.current.init(items, options);
+	}
 
+	imgClick(index) {
+		const { fyImg } = this.state;
+		const items = fyImg.map(item => ({
+			src: item.src,
+			w: item.w,
+			h: item.h
+		}));
+		const options = {
+			index,
+			shareButtons: [
+				{
+					id: "download",
+					label: "Download image",
+					url: "{{raw_image_url}}",
+					download: true
+				}
+			]
+		};
+		this.phoneSwipe.current.init(items, options);
+	}
 	render() {
 		const {
 			fyInfo,
@@ -255,7 +308,7 @@ export default class NewHouseInfo extends Component {
 			shareUserInfo,
 			tabSelect,
 			tabSelectActive,
-			hxInfo,
+			hxInfo
 		} = this.state;
 
 		if (isLoading) {
@@ -271,7 +324,10 @@ export default class NewHouseInfo extends Component {
 			const features = this.getFeaturesList();
 			return (
 				<div>
-					<FySwiper imgList={fyImg}></FySwiper>
+					<FySwiper
+						imgList={fyImg}
+						imgClick={this.imgClick}
+					></FySwiper>
 					<section className={`${Style.session} ${Style.bgcolor}`}>
 						<h2 className={Style.xqName}>{fyInfo.xqName}</h2>
 						<div className={Style.tag_warp}>{tagMap}</div>
@@ -358,7 +414,13 @@ export default class NewHouseInfo extends Component {
 						<div className={Style.hx_warp}>
 							<ul>
 								{hxInfo.map((item, index) => (
-									<li key={index} className={Style.hx_item}>
+									<li
+										key={index}
+										className={Style.hx_item}
+										onClick={() =>
+											this.showPhoneSwipe(index)
+										}
+									>
 										<figure className={Style.hx_figure}>
 											<img
 												src={baseImgUrl + item.images}
@@ -385,6 +447,7 @@ export default class NewHouseInfo extends Component {
 						id="dynamic"
 					>
 						<h2>楼盘动态</h2>
+						<div></div>
 					</section>
 					<section
 						className={`${Style.session} ${Style.bgcolor}`}
@@ -507,6 +570,7 @@ export default class NewHouseInfo extends Component {
 							</a>
 						</div>
 					</div>
+					<PhoneSwipe ref={this.phoneSwipe}></PhoneSwipe>
 				</div>
 			);
 		}

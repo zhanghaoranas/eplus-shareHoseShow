@@ -6,19 +6,22 @@ class FySwiper extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			active: 1,
+			active: 1
 		};
 	}
 	handleSlideChange(index) {
 		this.setState({
-			active: index + 1,
+			active: index + 1
 		});
+	}
+	handleClickImg(index) {
+		this.props.imgClick(index);
 	}
 	render() {
 		const { imgList } = this.props;
 		const { active } = this.state;
 		const SwiperContent = imgList.map((item, index) => (
-			<div key={index}>
+			<div key={index} onClick={() => this.handleClickImg(index)}>
 				<img
 					className={Style.swiper_img}
 					src={item.src}
@@ -29,10 +32,10 @@ class FySwiper extends Component {
 		const self = this;
 		const params = {
 			on: {
-				slideChangeTransitionEnd: function () {
+				slideChangeTransitionEnd: function() {
 					self.handleSlideChange(this.activeIndex);
-				},
-			},
+				}
+			}
 		};
 		return (
 			<div className={Style.swiper_warp}>

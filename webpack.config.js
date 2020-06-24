@@ -15,16 +15,16 @@ const devMode = process.env.NODE_ENV === "development";
 const webpackPlugins = [
 	new HtmlWebpackPlugin({
 		title: "移动端 webpack搭建",
-		template: "template/index.html",
+		template: "template/index.html"
 	}),
 	new webpack.ProgressPlugin(),
 	new CleanWebpackPlugin(),
 	new MiniCssExtractPlugin({
 		filename: devMode ? "css/[name].css" : "css/[name].[hash:6].css",
-		chunkFilename: devMode ? "css/[id].css" : "css/[id].[hash:6].css",
+		chunkFilename: devMode ? "css/[id].css" : "css/[id].[hash:6].css"
 	}),
 	new FriendlyErrorsWebpackPlugin(),
-	new webpack.HotModuleReplacementPlugin(),
+	new webpack.HotModuleReplacementPlugin()
 ];
 if (!devMode) {
 	// webpackPlugins.push(new BundleAnalyzerPlugin());
@@ -38,7 +38,7 @@ module.exports = {
 		contentBase: path.join(__dirname, "dist"),
 		port: 8080,
 		hot: true,
-		quiet: true,
+		quiet: true
 	},
 	mode: devMode ? "development" : "production",
 	module: {
@@ -51,20 +51,20 @@ module.exports = {
 						loader: MiniCssExtractPlugin.loader,
 						options: {
 							esModule: true,
-							hmr: devMode,
-						},
+							hmr: devMode
+						}
 					},
 					{
 						loader: "css-loader",
 						options: {
 							modules: {
 								localIdentName:
-									"[name]__[local]--[hash:base64:5]",
-							},
-						},
+									"[name]__[local]--[hash:base64:5]"
+							}
+						}
 					},
-					"postcss-loader",
-				],
+					"postcss-loader"
+				]
 			},
 			{
 				test: /\.css$/,
@@ -74,12 +74,11 @@ module.exports = {
 						loader: MiniCssExtractPlugin.loader,
 						options: {
 							esModule: true,
-							hmr: devMode,
-						},
+							hmr: devMode
+						}
 					},
-					"css-loader",
-					"postcss-loader",
-				],
+					"css-loader"
+				]
 			},
 			{
 				test: /\.(jsx|js)$/,
@@ -88,16 +87,16 @@ module.exports = {
 					{
 						loader: "thread-loader",
 						options: {
-							workers: 4,
-						},
+							workers: 4
+						}
 					},
 					{
 						loader: "babel-loader",
 						options: {
-							cacheDirectory: true,
-						},
-					},
-				],
+							cacheDirectory: true
+						}
+					}
+				]
 			},
 			{
 				test: /\.(png|svg|jpg|gif)$/,
@@ -105,37 +104,36 @@ module.exports = {
 					{
 						loader: "file-loader",
 						options: {
-							outputPath: "images",
-						},
-					},
-				],
-			},
-		],
+							outputPath: "images"
+						}
+					}
+				]
+			}
+		]
 	},
 	plugins: webpackPlugins,
 	optimization: {
 		runtimeChunk: true,
 		splitChunks: {
-			chunks: "all",
+			chunks: "all"
 		},
 		minimizer: [
 			// 并行压缩
 			new TerserPlugin({
 				parallel: true,
-				cache: true,
-			}),
-		],
+				cache: true
+			})
+		]
 	},
 	stats: "errors-only",
 	externals: {
 		react: "React",
 		"react-dom": "ReactDOM",
-		swiper: "Swiper",
+		swiper: "Swiper"
 	},
-	extensions: [".js", ".jsx", ".css", ".json"],
 	output: {
 		filename: "js/bundle.[hash].js",
 		path: path.resolve(__dirname, "dist"),
-		publicPath: "/",
-	},
+		publicPath: "/"
+	}
 };
