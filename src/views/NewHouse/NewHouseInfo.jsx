@@ -3,7 +3,7 @@ import Loading from "../../components/Loading.jsx";
 import FySwiper from "../../components/FySwiper.jsx";
 import Tag from "../../components/Tag.jsx";
 import PhoneSwipe from "../../components/PhoneSwipe.jsx";
-import TimeLine from '../../components/TimeLine'
+import TimeLine from "../../components/TimeLine";
 import { navigate } from "@reach/router";
 import Style from "./newHouse.module.css";
 import { baseUrl, baseImgUrl, mapKey } from "../../config.js";
@@ -58,9 +58,13 @@ export default class NewHouseInfo extends Component {
 			isLoading: true
 		};
 	}
-	componentDidMount() {
-		this.getFyInfoById();
-		this.getHXListById();
+	async componentDidMount() {
+		await Promise.all([this.getHXListById(), this.getFyInfoById()]);
+		this.setState({
+			isLoading: false
+		});
+		console.log(2);
+		this.setTabScrollTop();
 	}
 	async getFyInfoById() {
 		const url = baseUrl + `xinfang/xffy/share?id=${this.state.fyId}`;
@@ -79,10 +83,14 @@ export default class NewHouseInfo extends Component {
 				fyInfo: data
 			});
 			this.getFyImg();
+			console.log(3);
 		} catch (error) {
 			console.log(error);
 		}
 	}
+	/**
+	 * @description 获取户型图片
+	 */
 	async getHXListById() {
 		const url = baseUrl + `xinfang/xffyLayout/sharelist`;
 		const headers = new Headers({
@@ -99,6 +107,7 @@ export default class NewHouseInfo extends Component {
 			}).then(res => {
 				return res.json();
 			});
+			console.log(4);
 			this.setState({
 				hxInfo: data
 			});
@@ -123,11 +132,10 @@ export default class NewHouseInfo extends Component {
 				item => item.status === "success"
 			);
 			this.setState({
-				fyImg: effectiveImg,
-				isLoading: false
+				fyImg: effectiveImg
 			});
+			console.log(1);
 			this.loadMap();
-			this.setTabScrollTop();
 		}
 	}
 	loadImg(src) {
@@ -166,7 +174,7 @@ export default class NewHouseInfo extends Component {
 		console.log("窗口滚动是异步的吗？ 是的");
 		setTimeout(() => {
 			this.canScroll = true;
-		});
+		}, 300);
 	}
 	handleScroll() {
 		if (this.canScroll) {
@@ -196,10 +204,13 @@ export default class NewHouseInfo extends Component {
 	/**
 	 * @description 加载地图
 	 */
-	loadMap() {
-		loadMap(mapKey).then(res => {
+	async loadMap() {
+		try {
+			await loadMap(mapKey);
 			this.initMap();
-		});
+		} catch (error) {
+			console.error(`百度地图加载失败的原因${error}`);
+		}
 	}
 	/**
 	 * @description 初始化地图
@@ -428,7 +439,11 @@ export default class NewHouseInfo extends Component {
 									>
 										<figure className={Style.hx_figure}>
 											<img
-												src={baseImgUrl + item.images + getImgLimit(280, 280)}
+												src={
+													baseImgUrl +
+													item.images +
+													getImgLimit(280, 280)
+												}
 												alt="户型图片"
 											/>
 											<figcaption
@@ -453,7 +468,13 @@ export default class NewHouseInfo extends Component {
 					>
 						<h2>楼盘动态</h2>
 						<div className={Style.trends_list}>
-							<TimeLine content={fyInfo.xffyTrends}></TimeLine>
+							{fyInfo.xffyTrends.length ? (
+								<TimeLine
+									content={fyInfo.xffyTrends}
+								></TimeLine>
+							) : (
+								<p>暂无数据</p>
+							)}
 						</div>
 					</section>
 					<section
