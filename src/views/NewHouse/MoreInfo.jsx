@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "../../components/NavBar.jsx";
 import TabSelect from "../../components/TabSelect.jsx";
-
+import { formatTime } from "../../utils";
 import Style from "./moreInfo.module.css";
 export default class MoreInfo extends Component {
 	constructor(props) {
@@ -69,7 +69,7 @@ export default class MoreInfo extends Component {
 						<ul className={Style.item}>
 							<li>
 								<span>交房时间</span>
-								<span>{fyInfo.joinDate || "未知"}</span>
+								<span>{formatTime(fyInfo.joinDate) || "未知"}</span>
 							</li>
 							<li>
 								<span>产权年限</span>
@@ -173,7 +173,7 @@ export default class MoreInfo extends Component {
 								<span>建筑年代</span>
 								<span>
 									{fyInfo.buildYear
-										? fyInfo.buildYear + "年"
+										? formatTime(fyInfo.buildYear, "{y}") + "年"
 										: ""}
 								</span>
 							</li>

@@ -188,6 +188,9 @@
 	color: var(--black-deep);
 	font-size: 24px;
 }
+.trends_list {
+	margin-top: 40px;
+}
 .info_list {
 	margin-top: 40px;
 	font-size: 28px;

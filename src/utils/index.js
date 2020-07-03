@@ -19,7 +19,7 @@ function formatTime(time, cFormat = "{y}-{m}-{d}") {
 		h: date.getHours(),
 		i: date.getMinutes(),
 		s: date.getSeconds(),
-		a: date.getDay(),
+		a: date.getDay()
 	};
 	return format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
 		let value = formatObj[key];
@@ -31,5 +31,13 @@ function formatTime(time, cFormat = "{y}-{m}-{d}") {
 		return value || 0;
 	});
 }
-
-export { formatTime };
+/**
+ *
+ * @param {number} width
+ * @param {number} height
+ * @description 七牛限制图片尺寸，以及压缩
+ */
+function getImgLimit(width, height, limit = 68) {
+	return `?imageView2/1/w/${width}/h/${height}/format/jpg/interlace/1/q/${limit}|imageslim`;
+}
+export { formatTime, getImgLimit };

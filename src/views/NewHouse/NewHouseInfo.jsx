@@ -3,10 +3,11 @@ import Loading from "../../components/Loading.jsx";
 import FySwiper from "../../components/FySwiper.jsx";
 import Tag from "../../components/Tag.jsx";
 import PhoneSwipe from "../../components/PhoneSwipe.jsx";
+import TimeLine from '../../components/TimeLine'
 import { navigate } from "@reach/router";
 import Style from "./newHouse.module.css";
 import { baseUrl, baseImgUrl, mapKey } from "../../config.js";
-import { formatTime } from "../../utils/index.js";
+import { formatTime, getImgLimit } from "../../utils/index.js";
 import noImg from "../../static/images/dai.jpg";
 import loadMap from "../../utils/importBMap.js";
 import userHead from "../../image/head.png";
@@ -114,7 +115,7 @@ export default class NewHouseInfo extends Component {
 			fyImg = mainImg
 				.map(item => item.list)
 				.flat()
-				.map(item => baseImgUrl + item.url);
+				.map(item => baseImgUrl + item.url + getImgLimit(750, 420));
 			const allImg = await Promise.all(
 				fyImg.map(src => this.loadImg(src))
 			);
@@ -129,7 +130,6 @@ export default class NewHouseInfo extends Component {
 			this.setTabScrollTop();
 		}
 	}
-
 	loadImg(src) {
 		return new Promise((resolve, reject) => {
 			const image = new Image();
@@ -169,7 +169,6 @@ export default class NewHouseInfo extends Component {
 		});
 	}
 	handleScroll() {
-		console.log("滚动了");
 		if (this.canScroll) {
 			const { tabSelect } = this.state;
 			const index = tabSelect.filter(
@@ -429,7 +428,7 @@ export default class NewHouseInfo extends Component {
 									>
 										<figure className={Style.hx_figure}>
 											<img
-												src={baseImgUrl + item.images}
+												src={baseImgUrl + item.images + getImgLimit(280, 280)}
 												alt="户型图片"
 											/>
 											<figcaption
@@ -453,7 +452,9 @@ export default class NewHouseInfo extends Component {
 						id="dynamic"
 					>
 						<h2>楼盘动态</h2>
-						<div></div>
+						<div className={Style.trends_list}>
+							<TimeLine content={fyInfo.xffyTrends}></TimeLine>
+						</div>
 					</section>
 					<section
 						className={`${Style.session} ${Style.bgcolor}`}
