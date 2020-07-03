@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import NavBar from "../../components/NavBar.jsx";
 import loadMap from "../../utils/importBMap.js";
 import { mapKey } from "../../config.js";
@@ -61,8 +62,9 @@ class Map extends Component {
 		map.centerAndZoom(point, 16);
 		const marker = new BMap.Marker(point); // 创建标注
 		map.addOverlay(marker);
+		this.handleClickSearch(this.state.searchData[0].type);
 	}
-	handleClickSearch(type, index) {
+	handleClickSearch(type, index = 0) {
 		this.setState({
 			searchActive: index,
 		});
@@ -78,6 +80,11 @@ class Map extends Component {
 				autoViewport: false,
 				selectFirstResult: false,
 			},
+			onMarkersSet: function (pois) {
+				if (pois.length === 0) {
+					alert('暂无数据!')
+				}
+			}
 		});
 		mapSearch.searchNearby(type, point, 1000);
 	}
@@ -100,7 +107,7 @@ class Map extends Component {
 				<NavBar title="周边信息"></NavBar>
 				<div className={Style.map_warp}>
 					<div id="map"></div>
-					<ul>{searchTypeList}</ul>
+					<ul className={Style.bottom_choose}>{searchTypeList}</ul>
 				</div>
 			</div>
 		);
