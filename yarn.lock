@@ -13144,6 +13144,11 @@ to-vfile@^6.0.0:
     is-buffer "^2.0.0"
     vfile "^4.0.0"
 
+toastify-js@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.npm.taobao.org/toastify-js/download/toastify-js-1.8.0.tgz#8021857d45a79c6d9c1536e01367f188b8d8a360"
+  integrity sha1-gCGFfUWnnG2cFTbgE2fxiLjYo2A=
+
 toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/toidentifier/download/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"

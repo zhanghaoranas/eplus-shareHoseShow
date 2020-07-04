@@ -33,3 +33,7 @@
 	fill: currentColor;
 	overflow: hidden;
 }
+:global(.custom_toast) {
+	top: 20vh !important;
+	font-size: 28px;
+}

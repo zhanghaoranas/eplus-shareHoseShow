@@ -47,6 +47,7 @@
 		"react-dom": "^16.13.1",
 		"react-id-swiper": "^3.0.0",
 		"react-loading": "^2.0.3",
-		"swiper": "^5.3.7"
+		"swiper": "^5.3.7",
+		"toastify-js": "^1.8.0"
 	}
 }

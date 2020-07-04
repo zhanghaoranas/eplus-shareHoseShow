@@ -4,6 +4,11 @@ import NavBar from "../../components/NavBar.jsx";
 import loadMap from "../../utils/importBMap.js";
 import { mapKey } from "../../config.js";
 import Style from "./map.module.css";
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
+
+
+let toastify;
 class Map extends Component {
 	constructor(props) {
 		super(props);
@@ -65,6 +70,9 @@ class Map extends Component {
 		this.handleClickSearch(this.state.searchData[0].type);
 	}
 	handleClickSearch(type, index = 0) {
+		if (toastify) {
+			toastify.hideToast();
+		}
 		this.setState({
 			searchActive: index,
 		});
@@ -82,7 +90,12 @@ class Map extends Component {
 			},
 			onMarkersSet: function (pois) {
 				if (pois.length === 0) {
-					alert('暂无数据!')
+					toastify = Toastify({
+						text: `该小区周边暂时没有${type}数据`,
+						duration: 1000,
+						position: 'center', // `left`, `center` or `right`
+						className: 'custom_toast'
+					}).showToast();
 				}
 			}
 		});

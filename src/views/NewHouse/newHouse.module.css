@@ -92,6 +92,7 @@
 	border-bottom: 0.5px solid var(--borderColor);
 	position: sticky;
 	top: 0;
+	z-index: 2;
 	& > ul {
 		display: flex;
 		justify-content: space-between;
@@ -156,6 +157,7 @@
 	/* 如果设置为scroll 内容也会垂直滚动 */
 	margin-top: 40px;
 	overflow-x: auto;
+	overflow-y: hidden;
 	&::-webkit-scrollbar {
 		display: none;
 	}

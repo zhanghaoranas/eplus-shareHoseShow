@@ -63,7 +63,6 @@ export default class NewHouseInfo extends Component {
 		this.setState({
 			isLoading: false
 		});
-		console.log(2);
 		this.setTabScrollTop();
 	}
 	async getFyInfoById() {
@@ -83,9 +82,8 @@ export default class NewHouseInfo extends Component {
 				fyInfo: data
 			});
 			this.getFyImg();
-			console.log(3);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 	/**
@@ -107,12 +105,11 @@ export default class NewHouseInfo extends Component {
 			}).then(res => {
 				return res.json();
 			});
-			console.log(4);
 			this.setState({
 				hxInfo: data
 			});
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 	async getFyImg() {
@@ -134,7 +131,6 @@ export default class NewHouseInfo extends Component {
 			this.setState({
 				fyImg: effectiveImg
 			});
-			console.log(1);
 			this.loadMap();
 		}
 	}
@@ -169,7 +165,6 @@ export default class NewHouseInfo extends Component {
 		this.setState({
 			tabSelectActive: index
 		});
-
 		window.scrollTo(0, item.scrollTop); // 滚动是在函数完成之后才执行。
 		console.log("窗口滚动是异步的吗？ 是的");
 		setTimeout(() => {
@@ -209,7 +204,7 @@ export default class NewHouseInfo extends Component {
 			await loadMap(mapKey);
 			this.initMap();
 		} catch (error) {
-			console.error(`百度地图加载失败的原因${error}`);
+			console.error(`百度地图加载失败的原因:${error}`);
 		}
 	}
 	/**
@@ -473,8 +468,8 @@ export default class NewHouseInfo extends Component {
 									content={fyInfo.xffyTrends}
 								></TimeLine>
 							) : (
-								<p>暂无数据</p>
-							)}
+									<p>暂无数据</p>
+								)}
 						</div>
 					</section>
 					<section
