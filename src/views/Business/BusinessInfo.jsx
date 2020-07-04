@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Loading from "../../components/Loading.jsx";
 import FySwiper from "../../components/FySwiper.jsx";
+import PhoneSwipe from "../../components/PhoneSwipe.jsx";
 import Tag from "../../components/Tag.jsx";
 import { navigate } from "@reach/router";
 import Style from "./business.module.css";
@@ -22,6 +23,8 @@ export default class Business extends Component {
 			],
 			isLoading: true,
 		};
+		this.phoneSwipe = React.createRef();
+		this.imgClick = this.imgClick.bind(this);
 	}
 	componentDidMount() {
 		this.getFyInfoById();
@@ -80,7 +83,13 @@ export default class Business extends Component {
 		return new Promise((resolve, reject) => {
 			const image = new Image();
 			image.src = src;
-			image.onload = () => resolve({ src: src, status: "success" });
+			image.onload = () =>
+				resolve({
+					src: src,
+					status: "success",
+					w: image.width,
+					h: image.height
+				});
 			image.onerror = () => resolve({ src: src, status: "fail" });
 		});
 	}
@@ -120,6 +129,26 @@ export default class Business extends Component {
 		var marker = new BMap.Marker(point); // 创建标注
 		map.addOverlay(marker);
 	}
+	imgClick(index) {
+		const { fyImg } = this.state;
+		const items = fyImg.map(item => ({
+			src: item.src,
+			w: item.w,
+			h: item.h
+		}));
+		const options = {
+			index,
+			shareButtons: [
+				{
+					id: "download",
+					label: "Download image",
+					url: "{{raw_image_url}}",
+					download: true
+				}
+			]
+		};
+		this.phoneSwipe.current.init(items, options);
+	}
 	render() {
 		const { fyInfo, isLoading, fyImg, shareUserInfo } = this.state;
 
@@ -157,7 +186,7 @@ export default class Business extends Component {
 
 			return (
 				<div>
-					<FySwiper imgList={fyImg}></FySwiper>
+					<FySwiper imgList={fyImg} imgClick={this.imgClick}></FySwiper>
 					<section className={`${Style.session} ${Style.bgcolor}`}>
 						<h2 className={Style.xqName}>{fyInfo.xqName}</h2>
 						<div className={Style.tag_warp}>{tagMap}</div>
@@ -324,6 +353,7 @@ export default class Business extends Component {
 							</a>
 						</div>
 					</div>
+					<PhoneSwipe ref={this.phoneSwipe}></PhoneSwipe>
 				</div>
 			);
 		}
