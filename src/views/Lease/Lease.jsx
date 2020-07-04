@@ -1,10 +1,19 @@
-import React, { Component } from "react";
 
-export default class Lease extends Component {
-	constructor(props) {
-		super();
-	}
-	render() {
-		return <div>租赁房源</div>;
-	}
-}
+import React, { Component } from "react";
+import { Router } from "@reach/router";
+
+import LeaseInfo from "./LeaseInfo.jsx";
+import MoreInfo from "./MoreInfo.jsx";
+
+const Lease = () => {
+	return (
+		<div>
+			<Router>
+				<LeaseInfo path="/" />
+				<MoreInfo path="info" />
+			</Router>
+		</div>
+	);
+};
+
+export default Lease;
