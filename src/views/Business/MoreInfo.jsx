@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "../../components/NavBar.jsx";
 import TabSelect from "../../components/TabSelect.jsx";
-
+import { formatTime } from "../../utils/index.js";
 import Style from "./moreInfo.module.css";
 export default class MoreInfo extends Component {
 	constructor(props) {
@@ -21,11 +21,11 @@ export default class MoreInfo extends Component {
 					id: "dealInfo",
 					scrollTop: 0,
 				},
-				{
-					label: "业主信息",
-					id: "ownerInfo",
-					scrollTop: 0,
-				},
+				// {
+				// 	label: "业主信息",
+				// 	id: "ownerInfo",
+				// 	scrollTop: 0,
+				// },
 				{
 					label: "特色信息",
 					id: "characteristicInfo",
@@ -101,34 +101,29 @@ export default class MoreInfo extends Component {
 							</li>
 							<li>
 								<span>朝向</span>
-								<span>{fyInfo.towards || ""}</span>
-							</li>
-							<li>
-								<span>来源渠道</span>
-								<span>{fyInfo.source || ""}</span>
+								<span>{fyInfo.towards || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>套内面积</span>
 								<span>
 									{fyInfo.innerArea
 										? fyInfo.innerArea + "m²"
-										: ""}
+										: "暂无信息"}
 								</span>
 							</li>
 							<li>
 								<span>梯户</span>
 								<span>
-									{fyInfo.ti ? fyInfo.ti + "梯" : ""}
-									{fyInfo.hu ? fyInfo.hu + "户" : ""}
+									{fyInfo.ti && fyInfo.hu ? fyInfo.ti + "梯" + fyInfo.hu + "户" : "暂无信息"}
 								</span>
 							</li>
 							<li>
 								<span>户型结构</span>
-								<span>{fyInfo.huxingjiegou || ""}</span>
+								<span>{fyInfo.huxingjiegou || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>房屋现状</span>
-								<span>{fyInfo.fangwuStatus || ""}</span>
+								<span>{fyInfo.fangwuStatus || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>看房时间</span>
@@ -144,10 +139,10 @@ export default class MoreInfo extends Component {
 								<span>钥匙</span>
 								<span>{fyInfo.ifKey ? "有" : "无"}</span>
 							</li>
-							<li>
+							{fyInfo.ifKey ? <li>
 								<span>钥匙存放地</span>
-								<span>{fyInfo.keyplaceName || ""}</span>
-							</li>
+								<span>{fyInfo.keyplaceName || "无存放信息"}</span>
+							</li> : ''}
 						</ul>
 					</li>
 					<li id="dealInfo">
@@ -155,40 +150,40 @@ export default class MoreInfo extends Component {
 						<ul className={Style.item}>
 							<li>
 								<span>交易权属</span>
-								<span>{fyInfo.jyBelong || ""}</span>
+								<span>{fyInfo.jyBelong || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>出证日期</span>
 								<span>
-									{fyInfo.chuzhengDate &&
-										fyInfo.chuzhengDate + "年"}
+									{fyInfo.chuzhengDate ?
+										fyInfo.chuzhengDate + "年" : '暂无信息'}
 								</span>
 							</li>
 							<li>
 								<span>产权年限</span>
-								<span>{fyInfo.cqYear || ""}</span>
+								<span>{fyInfo.cqYear || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>产权所属</span>
-								<span>{fyInfo.cqBelong || ""}</span>
+								<span>{fyInfo.cqBelong || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>唯一住房</span>
 								<span>
-									{fyInfo.ifOnly == "0" ? "" : fyInfo.ifOnly}
+									{fyInfo.ifOnly == "0" ? "暂无信息" : fyInfo.ifOnly}
 								</span>
 							</li>
 							<li>
 								<span>抵押信息</span>
-								<span>{fyInfo.diya || ""}</span>
+								<span>{fyInfo.diya || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>房产证</span>
-								<span>{fyInfo.propertyCard || ""}</span>
+								<span>{fyInfo.propertyCard || "暂无信息"}</span>
 							</li>
 						</ul>
 					</li>
-					<li id="ownerInfo">
+					{/* <li id="ownerInfo">
 						<h3>业主信息</h3>
 						<ul className={Style.item}>
 							<li>
@@ -212,37 +207,37 @@ export default class MoreInfo extends Component {
 								<span>{fyInfo.sellReason || ""}</span>
 							</li>
 						</ul>
-					</li>
+					</li> */}
 					<li id="characteristicInfo">
 						<h3>特色信息</h3>
 						<ul className={Style.item}>
 							<li>
 								<span>学区名额</span>
-								<span>{fyInfo.xuequ || ""}</span>
+								<span>{fyInfo.xuequ || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>房源配套</span>
-								<span>{fyInfo.peitao || ""}</span>
+								<span>{fyInfo.peitao ? JSON.parse(fyInfo.peitao).join() : "暂无信息"}</span>
 							</li>
 							<li>
 								<span>装修</span>
-								<span>{fyInfo.zhuangxiu || ""}</span>
+								<span>{fyInfo.zhuangxiu || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>税费解析</span>
-								<span>{fyInfo.taxationJiexi || ""}</span>
+								<span>{fyInfo.taxationJiexi || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>核心卖点</span>
-								<span>{fyInfo.hexinmaidian || ""}</span>
+								<span>{fyInfo.hexinmaidian || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>交通出行</span>
-								<span>{fyInfo.traffic || ""}</span>
+								<span>{fyInfo.traffic || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>房源介绍</span>
-								<span>{fyInfo.introduce || ""}</span>
+								<span>{fyInfo.introduce || "暂无信息"}</span>
 							</li>
 						</ul>
 					</li>
@@ -251,19 +246,19 @@ export default class MoreInfo extends Component {
 						<ul className={Style.item}>
 							<li>
 								<span>供暖方式</span>
-								<span>{fyInfo.heatWay || ""}</span>
+								<span>{fyInfo.heatWay || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>用电类型</span>
-								<span>{fyInfo.electricType || ""}</span>
+								<span>{fyInfo.electricType || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>用水类型</span>
-								<span>{fyInfo.waterType || ""}</span>
+								<span>{fyInfo.waterType || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>车位配比</span>
-								<span>{fyInfo.parkingRatio || ""}</span>
+								<span>{fyInfo.parkingRatio || "暂无信息"}</span>
 							</li>
 
 							<li>
@@ -272,8 +267,8 @@ export default class MoreInfo extends Component {
 									{fyInfo.ifHotwater
 										? "有"
 										: fyInfo.ifHotwater == 0
-										? "无"
-										: ""}
+											? "无"
+											: ""}
 								</span>
 							</li>
 							<li>
@@ -291,55 +286,55 @@ export default class MoreInfo extends Component {
 						<ul className={Style.item}>
 							<li>
 								<span>座栋数</span>
-								<span>{fyInfo.zuodongNum || ""}</span>
+								<span>{fyInfo.zuodongNum ? fyInfo.zuodongNum + '栋' : ""}</span>
 							</li>
 							<li>
 								<span>总户数</span>
 								<span>
 									{fyInfo.fangjianNum
 										? fyInfo.fangjianNum + "户"
-										: ""}
+										: "暂无信息"}
 								</span>
 							</li>
 							<li>
 								<span>建筑类型</span>
-								<span>{fyInfo.buildType || ""}</span>
+								<span>{fyInfo.buildType || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>建筑结构</span>
-								<span>{fyInfo.buildStruct || ""}</span>
+								<span>{fyInfo.buildStruct || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>建筑年代</span>
 								<span>
 									{fyInfo.buildYear
-										? fyInfo.buildYear + "年"
-										: ""}
+										? formatTime(fyInfo.buildYear, "{y}") + "年"
+										: "暂无信息"}
 								</span>
 							</li>
 							<li>
 								<span>绿化率</span>
-								<span>{fyInfo.greenRatio || ""}</span>
+								<span>{fyInfo.greenRatio || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>容积率</span>
-								<span>{fyInfo.volumeRatio || ""}</span>
+								<span>{fyInfo.volumeRatio || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>占地面积</span>
 								<span>
 									{fyInfo.allarea
 										? fyInfo.allarea + "㎡"
-										: ""}
+										: "暂无信息"}
 								</span>
 							</li>
 							<li>
 								<span>开发商</span>
-								<span>{fyInfo.developer || ""}</span>
+								<span>{fyInfo.developer || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>物业公司</span>
-								<span>{fyInfo.property || ""}</span>
+								<span>{fyInfo.property || "暂无信息"}</span>
 							</li>
 						</ul>
 					</li>

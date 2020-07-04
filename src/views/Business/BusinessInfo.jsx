@@ -5,7 +5,7 @@ import Tag from "../../components/Tag.jsx";
 import { navigate } from "@reach/router";
 import Style from "./business.module.css";
 import { baseUrl, baseImgUrl, mapKey } from "../../config.js";
-import { formatTime } from "../../utils/index.js";
+import { formatTime, getImgLimit } from "../../utils/index.js";
 import noImg from "../../static/images/dai.jpg";
 import loadMap from "../../utils/importBMap.js";
 import userHead from "../../image/head.png";
@@ -58,9 +58,9 @@ export default class Business extends Component {
 			fyImg = mainImg
 				.map((item) => item.list)
 				.flat()
-				.map((item) => baseImgUrl + item.url);
+				.map((item) => baseImgUrl + item.url + getImgLimit(750, 420));
 			if (hxImg) {
-				fyImg.push(...hxImg.map((item) => baseImgUrl + item.url));
+				fyImg.push(...hxImg.map((item) => baseImgUrl + item.url + getImgLimit(750, 420)));
 			}
 			const allImg = await Promise.all(
 				fyImg.map((src) => this.loadImg(src))
@@ -224,27 +224,27 @@ export default class Business extends Component {
 							</li>
 							<li>
 								<span>装修</span>
-								<span>{fyInfo.zhuangxiu || "暂无数据"}</span>
+								<span>{fyInfo.zhuangxiu || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>取暖方式</span>
-								<span>{fyInfo.heatWay || "暂无数据"}</span>
+								<span>{fyInfo.heatWay || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>学区名额</span>
-								<span>{fyInfo.xuequ || "暂无数据"}</span>
+								<span>{fyInfo.xuequ || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>交易权属</span>
-								<span>{fyInfo.jyBelong || "暂无数据"}</span>
+								<span>{fyInfo.jyBelong || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>出证日期</span>
-								<span>{fyInfo.chuzhengDate || "暂无数据"}</span>
+								<span>{fyInfo.chuzhengDate || "暂无信息"}</span>
 							</li>
 							<li>
 								<span>产权年限</span>
-								<span>{fyInfo.cqYear || "暂无数据"}</span>
+								<span>{fyInfo.cqYear || "暂无信息"}</span>
 							</li>
 						</ul>
 						<div
